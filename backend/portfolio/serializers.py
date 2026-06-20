@@ -21,9 +21,11 @@ class ProjectAssetSerializer(serializers.ModelSerializer):
 
 
 class ProjectListSerializer(serializers.ModelSerializer):
+    skills = SkillSerializer(many=True, read_only=True)
+
     class Meta:
         model = Project
-        fields = ['id', 'title', 'slug', 'short_description', 'cover_image', 'featured', 'project_type', 'start_date', 'end_date']
+        fields = ['id', 'title', 'slug', 'short_description', 'cover_image', 'featured', 'project_type', 'start_date', 'end_date', 'skills']
 
 
 class ProjectDetailSerializer(serializers.ModelSerializer):
