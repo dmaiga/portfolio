@@ -25,17 +25,8 @@ class Profile(models.Model):
 
 
 class Skill(models.Model):
-    CATEGORY_CHOICES = [
-        ('Language', 'Language'),
-        ('Framework', 'Framework'),
-        ('Database', 'Database'),
-        ('Cloud', 'Cloud'),
-        ('Tool', 'Tool'),
-        ('Methodology', 'Methodology'),
-    ]
-
     name = models.CharField(max_length=100)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    category = models.CharField(max_length=100)
     icon = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
@@ -47,7 +38,20 @@ class Skill(models.Model):
         ordering = ['category', 'name']
 
 
+
+class ProjectType(models.TextChoices):
+    PROFESSIONAL = "PROFESSIONAL", "Expérience professionnelle"
+    CONSULTING = "CONSULTING", "Mission de conseil"
+    ACADEMIC = "ACADEMIC", "Projet académique"
+    PERSONAL = "PERSONAL", "Projet personnel"
+
 class Project(models.Model):
+    project_type = models.CharField(
+        max_length=20,
+        choices=ProjectType.choices,
+        default=ProjectType.PERSONAL,
+    )
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     short_description = models.CharField(max_length=300)
