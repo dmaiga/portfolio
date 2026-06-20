@@ -5,6 +5,7 @@ import { MapPin, Mail, ArrowRight, Download, Database, BarChart3, Server, Code2 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ProjectCard } from "@/components/project-card"
+import { mediaUrl } from "@/lib/utils"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
@@ -63,7 +64,7 @@ export default async function HomePage() {
         <div className="flex flex-col sm:flex-row gap-8 items-start">
           {profile.photo && (
             <Image
-              src={`${API}${profile.photo}`}
+              src={mediaUrl(profile.photo, API)}
               alt={profile.full_name}
               width={120}
               height={120}
@@ -95,7 +96,7 @@ export default async function HomePage() {
                 </a>
               )}
               {profile.cv && (
-                <a href={`${API}${profile.cv}`} target="_blank" rel="noopener noreferrer">
+                <a href={mediaUrl(profile.cv, API)} target="_blank" rel="noopener noreferrer">
                   <Button variant="ghost" size="sm">
                     <Download className="size-3.5 mr-1.5" />
                     CV

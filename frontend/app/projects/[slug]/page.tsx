@@ -7,6 +7,7 @@ import Image from "next/image"
 import { Star, ExternalLink, FileText } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { mediaUrl } from "@/lib/utils"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
@@ -71,7 +72,7 @@ export default async function ProjectDetailPage({
       {project.cover_image && (
         <div className="rounded-xl overflow-hidden border aspect-video relative">
           <Image
-            src={`${API}${project.cover_image}`}
+            src={mediaUrl(project.cover_image, API)}
             alt={project.title}
             fill
             className="object-cover"
@@ -192,13 +193,13 @@ export default async function ProjectDetailPage({
             {imageAssets.map((asset) => (
               <a
                 key={asset.id}
-                href={`${API}${asset.file}`}
+                href={mediaUrl(asset.file, API)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block rounded-lg overflow-hidden border aspect-video relative hover:opacity-90 transition-opacity duration-200"
               >
                 <Image
-                  src={`${API}${asset.file}`}
+                  src={mediaUrl(asset.file, API)}
                   alt={asset.title}
                   fill
                   className="object-cover"
@@ -221,7 +222,7 @@ export default async function ProjectDetailPage({
               return (
                 <li key={asset.id}>
                   <a
-                    href={`${API}${asset.file}`}
+                    href={mediaUrl(asset.file, API)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm underline underline-offset-4 hover:text-foreground transition-colors duration-200"
