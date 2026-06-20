@@ -8,8 +8,16 @@ import "./globals.css"
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" })
 
 export const metadata: Metadata = {
-  title: "Mahamane Daouda Maiga — Portfolio",
-  description: "Data Engineer & Développeur Backend basé à Bamako",
+  title: {
+    template: "%s | Mahamane Daouda Maiga",
+    default: "Mahamane Daouda Maiga — Portfolio",
+  },
+  description: "Data Engineer & Architecte Applicatif basé à Bamako, Mali. Spécialisé en ingénierie des données, BI et systèmes d'information.",
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    siteName: "Mahamane Daouda Maiga",
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

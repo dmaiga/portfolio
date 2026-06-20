@@ -35,6 +35,7 @@ export interface ProjectSummary {
   project_type: ProjectType
   start_date: string | null
   end_date: string | null
+  skills: Skill[]
 }
 
 export interface ProjectAsset {

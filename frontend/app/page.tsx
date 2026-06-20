@@ -1,10 +1,19 @@
 import type { Profile, Skill, ProjectSummary } from "@/lib/types"
 import Link from "next/link"
 import Image from "next/image"
+import { MapPin, Mail, ArrowRight, Download, Database, BarChart3, Server, Code2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { ProjectCard } from "@/components/project-card"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
+
+const DOMAINS = [
+  { icon: Database, label: "Data Engineering" },
+  { icon: BarChart3, label: "Business Intelligence" },
+  { icon: Server, label: "Systèmes d'Information" },
+  { icon: Code2, label: "Développement Backend" },
+]
 
 export default async function HomePage() {
   const [profileRes, skillsRes, projectsRes] = await Promise.all([
@@ -22,6 +31,10 @@ export default async function HomePage() {
   const projects: ProjectSummary[] = await projectsRes.json()
   const featured = projects.filter((p) => p.featured)
 
+  const missionCount = projects.filter(
+    (p) => p.project_type === "PROFESSIONAL" || p.project_type === "CONSULTING",
+  ).length
+
   const skillsByCategory = skills.reduce<Record<string, Skill[]>>((acc, skill) => {
     if (!acc[skill.category]) acc[skill.category] = []
     acc[skill.category].push(skill)
@@ -30,35 +43,108 @@ export default async function HomePage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12 space-y-16">
-      {/* Profil */}
-      <section className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500 flex flex-col sm:flex-row gap-6 sm:gap-10 items-start">
-        {profile.photo && (
-          <Image
-            src={`${API}${profile.photo}`}
-            alt={profile.full_name}
-            width={112}
-            height={112}
-            className="rounded-full object-cover shrink-0 ring-2 ring-border"
-          />
-        )}
-        <div className="space-y-3">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{profile.full_name}</h1>
-          <p className="text-lg text-muted-foreground">{profile.title}</p>
-          <p className="text-sm leading-relaxed max-w-2xl text-muted-foreground">{profile.bio}</p>
+
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500 space-y-8">
+
+        {/* Badges contexte */}
+        <div className="flex flex-wrap gap-2">
+          <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground border rounded-full px-3 py-1">
+            <MapPin className="size-3" />
+            Bamako, Mali
+          </span>
+          <span className="inline-flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 rounded-full px-3 py-1 bg-emerald-50 dark:bg-emerald-950/30">
+            <span className="size-1.5 rounded-full bg-emerald-500 inline-block" />
+            Disponible
+          </span>
+        </div>
+
+        {/* Profil principal */}
+        <div className="flex flex-col sm:flex-row gap-8 items-start">
+          {profile.photo && (
+            <Image
+              src={`${API}${profile.photo}`}
+              alt={profile.full_name}
+              width={120}
+              height={120}
+              className="rounded-2xl object-cover shrink-0 ring-2 ring-primary/20 shadow-sm"
+              priority
+            />
+          )}
+          <div className="space-y-4">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{profile.full_name}</h1>
+              <p className="text-lg text-muted-foreground mt-1">{profile.title}</p>
+            </div>
+            <p className="text-sm leading-relaxed text-muted-foreground max-w-xl">{profile.bio}</p>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap gap-3 pt-1">
+              <Link href="/projects">
+                <Button size="sm">
+                  Voir les projets
+                  <ArrowRight className="size-3.5 ml-1.5" />
+                </Button>
+              </Link>
+              {profile.email && (
+                <a href={`mailto:${profile.email}`}>
+                  <Button variant="outline" size="sm">
+                    <Mail className="size-3.5 mr-1.5" />
+                    Me contacter
+                  </Button>
+                </a>
+              )}
+              {profile.cv && (
+                <a href={`${API}${profile.cv}`} target="_blank" rel="noopener noreferrer">
+                  <Button variant="ghost" size="sm">
+                    <Download className="size-3.5 mr-1.5" />
+                    CV
+                  </Button>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="grid grid-cols-3 divide-x divide-border border rounded-xl">
+          {[
+            { value: projects.length, label: "projets réalisés" },
+            { value: skills.length, label: "compétences" },
+            { value: missionCount, label: "missions clientes" },
+          ].map(({ value, label }) => (
+            <div key={label} className="px-6 py-4 text-center">
+              <div className="text-2xl font-bold text-primary">{value}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Domaines */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {DOMAINS.map(({ icon: Icon, label }) => (
+            <div
+              key={label}
+              className="flex items-center gap-2.5 rounded-lg border px-4 py-3 bg-muted/40 hover:bg-accent/40 transition-colors duration-200"
+            >
+              <Icon className="size-4 text-primary shrink-0" />
+              <span className="text-xs font-medium leading-tight">{label}</span>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Compétences */}
+      {/* ── Compétences ──────────────────────────────────────── */}
       {skills.length > 0 && (
         <section
-          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500"
+          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500 space-y-6"
           style={{ "--tw-animation-delay": "150ms" } as React.CSSProperties}
         >
-          <h2 className="text-xl font-semibold mb-6">Compétences</h2>
+          <h2 className="text-xl font-semibold">Compétences</h2>
           <div className="space-y-5">
             {Object.entries(skillsByCategory).map(([category, items]) => (
               <div key={category}>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mb-2">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mb-2.5">
                   {category}
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -74,13 +160,13 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Projets mis en avant */}
+      {/* ── Projets mis en avant ─────────────────────────────── */}
       {featured.length > 0 && (
         <section
-          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500"
+          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500 space-y-6"
           style={{ "--tw-animation-delay": "300ms" } as React.CSSProperties}
         >
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold">Projets mis en avant</h2>
             <Link
               href="/projects"
