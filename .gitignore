@@ -1,0 +1,45 @@
+docs/
+rules/
+CLAUDE.md
+# Variables d'environnement et secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environnement virtuel
+venv/
+.venv/
+env/
+
+# Django
+*.log
+db.sqlite3
+backend/media/
+backend/staticfiles/
+
+# Node / Next.js (Sprint 2)
+node_modules/
+.next/
+out/
+npm-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
