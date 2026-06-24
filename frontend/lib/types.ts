@@ -25,6 +25,15 @@ export const PROJECT_TYPE_LABELS: Record<ProjectType, string> = {
   PERSONAL: "Projet personnel",
 }
 
+// Catégories de la page Réalisations, dans l'ordre d'affichage.
+// Titres alignés sur docs/05-archi-info.md.
+export const PROJECT_CATEGORY_ORDER: { type: ProjectType; title: string }[] = [
+  { type: "PROFESSIONAL", title: "Expériences professionnelles" },
+  { type: "CONSULTING", title: "Consultations ponctuelles" },
+  { type: "ACADEMIC", title: "Projets académiques" },
+  { type: "PERSONAL", title: "Projets personnels" },
+]
+
 export interface ProjectSummary {
   id: number
   title: string
