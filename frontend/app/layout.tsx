@@ -8,7 +8,10 @@ import "./globals.css"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" })
 
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE),
   title: {
     template: "%s | Mahamane Daouda Maiga",
     default: "Mahamane Daouda Maiga — Portfolio",

@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [new URL(`${API_URL}/media/**`)],
     dangerouslyAllowLocalIP: isDev,
   },
+  // Hôtes autorisés pour les ressources de dev (HMR) en accès non-localhost.
+  allowedDevOrigins: ["127.0.0.1"],
 };
 
 export default nextConfig;
