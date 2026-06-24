@@ -2,6 +2,7 @@ export interface Profile {
   full_name: string
   title: string
   bio: string
+  about: string
   photo: string
   email: string
   github_url: string

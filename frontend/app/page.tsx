@@ -1,21 +1,15 @@
 import type { Profile, Skill, ProjectSummary } from "@/lib/types"
 import Link from "next/link"
 import Image from "next/image"
-import { MapPin, Mail, ArrowRight, Download, Database, BarChart3, Server, Code2 } from "lucide-react"
+import { MapPin, Mail, ArrowRight, Download } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ProjectCard } from "@/components/project-card"
 import { Markdown } from "@/components/markdown"
+import { DOMAINS } from "@/lib/domains"
 import { mediaUrl } from "@/lib/utils"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
-
-const DOMAINS = [
-  { icon: Database, label: "Data Engineering" },
-  { icon: BarChart3, label: "Business Intelligence" },
-  { icon: Server, label: "Systèmes d'Information" },
-  { icon: Code2, label: "Développement Backend" },
-]
 
 export default async function HomePage() {
   const [profileRes, skillsRes, projectsRes] = await Promise.all([

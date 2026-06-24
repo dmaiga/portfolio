@@ -3,6 +3,7 @@ import { Geist } from "next/font/google"
 import Link from "next/link"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { SiteFooter } from "@/components/site-footer"
 import "./globals.css"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist-sans" })
@@ -41,6 +42,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <Link href="/methode" className="hover:text-foreground transition-colors duration-200">
                     Méthode
                   </Link>
+                  <Link href="/a-propos" className="hover:text-foreground transition-colors duration-200">
+                    À propos
+                  </Link>
+                  <Link href="/contact" className="hover:text-foreground transition-colors duration-200">
+                    Contact
+                  </Link>
                 </div>
                 <ThemeToggle />
               </div>
@@ -49,35 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
           <main className="flex-1">{children}</main>
 
-          <footer className="border-t">
-            <div className="max-w-5xl mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-              <span>© 2026 Mahamane Daouda Maiga</span>
-              <div className="flex gap-6">
-                <a
-                  href="mailto:mdmaiga01@gmail.com"
-                  className="hover:text-foreground transition-colors duration-200"
-                >
-                  Email
-                </a>
-                <a
-                  href="https://github.com/dmaiga"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors duration-200"
-                >
-                  GitHub
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/mdmaiga"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-foreground transition-colors duration-200"
-                >
-                  LinkedIn
-                </a>
-              </div>
-            </div>
-          </footer>
+          <SiteFooter />
         </ThemeProvider>
       </body>
     </html>
