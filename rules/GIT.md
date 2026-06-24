@@ -125,8 +125,6 @@ But : permettre à la direction de détecter rapidement les anomalies commercial
 
 ## Ce qu'un LLM doit retenir
 
-* faire des git add --all 
-* eviter l'ajout du text Co-Authored-By
 * Proposer des commits regroupés par fonctionnalité.
 * Utiliser des messages orientés métier.
 * Éviter les commits vagues ou génériques.

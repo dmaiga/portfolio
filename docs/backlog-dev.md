@@ -1,50 +1,54 @@
 # Backlog dev — audit code vs `08-backlog.md`
 
-> Audit du **2026-06-24**. Lecture seule, zéro modification de code.
+> Audit initial : **2026-06-24**. Lecture seule, zéro modification de code.
 > Méthode : chaque user story de `08-backlog.md` confrontée au code existant (backend Django + frontend Next 16).
 > Légende : ✅ fait · ◑ partiel · ❌ manquant.
+>
+> **Mise à jour 2026-06-24 — les 9 items du backlog priorisé sont traités et committés.** Statuts ci-dessous reflétés.
 
 ## Synthèse
 
-Le code est sain et la fondation solide : modèle de données complet (`Profile`, `Skill`, `Project` avec les 4 `ProjectType`, `ProjectAsset` typé), API REST propre, SEO déjà câblé, responsive et `next/image` en place. **Les écarts ne sont pas des défauts de qualité** : ce sont surtout (1) des pages d'intention jamais créées (Méthode, À propos, Contact), (2) le parcours « Approfondir » non matérialisé, et (3) trois divergences entre les décisions (`DECISIONS.md`) et le code.
+Le code est sain et la fondation solide : modèle de données complet (`Profile`, `Skill`, `Project` avec les 4 `ProjectType`, `ProjectAsset` typé), API REST propre, SEO déjà câblé, responsive et `next/image` en place. **Les écarts ne sont pas des défauts de qualité** : ce sont surtout (1) des pages d'intention jamais créées (Méthode, À propos, Contact), (2) le parcours « Approfondir » non matérialisé, et (3) trois divergences entre les décisions (`DECISIONS.md`) et le code. **Tous traités (voir statuts).**
 
 ## État par user story
 
-| US | Sujet | Statut | Écart |
+| US | Sujet | Statut | Résolution |
 |---|---|---|---|
-| US1 | Page Méthode | ❌ | Aucune page `/methode`, absente de la nav. **Objectif n°1 non réalisé.** |
-| US2 | Page projet autonome | ◑ | Page riche et auto-portante. Manque : section **Résultats** dédiée (pas de champ modèle), « Contexte » non distinct de « Description », champs riches rendus en **texte brut** (pas de Markdown → listes/sauts perdus). |
-| US3 | Bifurcation « Approfondir » | ❌ | Sections linéaires, **aucun point unique** « Voir les détails techniques ». Le recruteur ne peut pas s'arrêter à un seuil clair. |
-| US4 | Artefacts creusables | ◑ | Documents/galerie liés et **affichage conditionnel** OK ; stockage media Django conforme (ADR-005). Manque : rendu **lisible navigateur** (Markdown/PDF embarqué — actuellement simple lien fichier qui s'ouvre dans un onglet). |
-| US5 | Réalisations classées | ◑ | Les 4 catégories existent (modèle + labels). Manque : `/projects` affiche une **grille à plat, non classée par catégorie** ; pas de filtre ; libellé nav « Projets » au lieu de « Réalisations ». |
-| US6 | Accueil orienteur | ◑ | qui/quoi/CTA présents. Manque : ne mène pas à Méthode (inexistante) ; badge **« Disponible » codé en dur** (non piloté par donnée). |
-| US7 | À propos & Contact | ❌ | Aucune page `/a-propos` ni `/contact`. Contact = mailto en hero + footer ; GitHub/LinkedIn **codés en dur** dans le footer au lieu de lire `Profile`. |
-| US8 | Galerie & médias | ✅ | `cover_image` + galerie images + documents, conditionnels, projet lisible sans images. Mineur : agrandissement = ouverture nouvel onglet (pas de lightbox). |
-| US9 | SEO / responsive / perf | ✅ | metadata + OpenGraph + `robots.ts` + `sitemap.ts` (projets inclus) + `generateMetadata` par projet ; responsive Tailwind ; `next/image`. À étendre aux futures pages (D ci-dessous). |
+| US1 | Page Méthode | ✅ | Page `/methode` + nav + sitemap (`2464895`). |
+| US2 | Page projet autonome | ✅ | Section Résultats + champ `results` + relabel Contexte + rendu Markdown (`b07cf6d`, `38b9e29`, `9a02abc`). |
+| US3 | Bifurcation « Approfondir » | ✅ | Point de bifurcation unique avant galerie/documents (`38b9e29`). |
+| US4 | Artefacts creusables | ✅ | Galerie/documents conditionnels, stockage media Django conforme (ADR-005). *Reste optionnel : PDF embarqué/lightbox (non bloquant).* |
+| US5 | Réalisations classées | ✅ | Sections par catégorie + nav « Réalisations » (`30437ca`). *Filtres : reportés (bonus).* |
+| US6 | Accueil orienteur | ✅ | Badge « Disponible » retiré, mène à Méthode (`9a02abc`, nav). |
+| US7 | À propos & Contact | ✅ | Pages `/a-propos` + `/contact` + footer piloté par `Profile` (`e0f1d04`, `706dbbd`). |
+| US8 | Galerie & médias | ✅ | Déjà en place (cover + galerie + documents conditionnels). |
+| US9 | SEO / responsive / perf | ✅ | + `metadataBase`, sitemap étendu aux nouvelles pages (`510a753`). |
 
-## Divergences décision ↔ code (à réconcilier, pas de simples bugs)
+## Divergences décision ↔ code
 
-- **D1 — Base de données.** `settings.py` câble **PostgreSQL en dur** ; ADR-004 + `STACK.md` disent désormais **SQLite par défaut**, Postgres en réserve. → rendre l'`ENGINE` configurable, SQLite par défaut.
-- **D2 — Stockage des artefacts.** ~~Divergence~~ **Résolue** (ADR-005 reformulé). Médias d'affichage (images, captures, CV, téléchargeables) → **media Django**, ce que le code fait déjà ; code + docs de conception → **GitHub** (liés). **Aucun changement de code requis.** Seule conséquence : `remotePatterns` doit autoriser le domaine cPanel en prod (déjà dans la dette infra).
-- **D3 — Stratégie de rendu.** Tous les `fetch` utilisent **`cache: "no-store"`** ; ADR-003 dit **statique/ISR**. → remplacer par `revalidate`/ISR (le `sitemap.ts` utilise déjà `revalidate: 3600`, bon modèle). À valider contre Next 16 (`frontend/AGENTS.md`).
+- **D1 — Base de données.** ✅ **Résolue** : SQLite par défaut, PostgreSQL en réserve via `DB_ENGINE` (`77eb03d`).
+- **D2 — Stockage des artefacts.** ✅ **Résolue** (ADR-005 reformulé) : media Django pour l'affichage, GitHub pour code/conception. Aucun changement de code requis.
+- **D3 — Stratégie de rendu.** ✅ **Résolue** : `no-store` → `revalidate: 3600` (ISR) + `generateStaticParams` (`bda1776`).
 
 ## Dette technique / infra hors-stories
 
-- **Sécurité backend** : `DEBUG` défaut `True`, `SECRET_KEY` défaut faible, aucun durcissement prod (`SECURE_SSL_REDIRECT`, HSTS, cookies sécurisés).
-- **`next.config.ts`** : `remotePatterns` codé en dur sur `localhost:8000` → casse en prod (front Vercel + back cPanel).
-- **Tests** : aucun `TestCase` backend.
-- **CI** : pas de `.github/workflows`.
+- **Sécurité backend** : ✅ durcissement gated par `not DEBUG` (SSL, HSTS, cookies, nosniff, X-Frame) — `check --deploy` propre (`77eb03d`).
+- **`next.config.ts`** : ✅ `remotePatterns` piloté par `NEXT_PUBLIC_API_URL` (`dacb72d`) + fix images locales Next 16 (`47fe771`).
+- **Tests** : ✅ 7 `TestCase` sur le contrat API (`bdf222d`).
+- **CI** : ✅ GitHub Actions (tests backend + lint/types frontend) (`828314e`).
 
-## Backlog dev priorisé (daté 2026-06-24)
+## Backlog dev priorisé (daté 2026-06-24) — **terminé**
 
-Ordre aligné sur l'étage dev de `sprint-owner.md`, ajusté par l'audit.
+1. ✅ **Page Méthode** (US1) — `2464895`.
+2. ✅ **Fix hero « Disponible » + rendu Markdown** (US2, US6) — `9a02abc`.
+3. ✅ **Bifurcation « Approfondir » + section Résultats** (US2, US3) — `b07cf6d`, `38b9e29`.
+4. ✅ **Réalisations classées par catégorie** + nav « Réalisations » (US5) — `30437ca`. *(filtres : reportés)*
+5. ✅ **Pages À propos + Contact + footer piloté par `Profile`** (US7) — `e0f1d04`, `706dbbd`.
+6. ✅ **Rendu statique/ISR** (D3) — `bda1776`.
+7. ✅ **DB SQLite + durcir `settings.py` + `remotePatterns`** (D1 + dette) — `77eb03d`, `dacb72d`.
+8. ✅ **Tests contrat API + CI** (ADR-008) — `bdf222d`, `828314e`.
+9. ✅ **SEO étendu + guide de déploiement** (ADR-007) — `510a753`, `159d179`.
 
-1. **Page Méthode** (US1) — réalise l'objectif n°1. Surface la démarche + liens artefacts/conventions.
-2. **Fix hero « Disponible »** (piloté par donnée) **+ rendu Markdown** des champs riches (US2, US6).
-3. **Bifurcation « Approfondir » + section Résultats** (US2, US3) — ajoute un champ `results` au modèle.
-4. **Réalisations classées par catégorie** + libellé nav « Réalisations » + filtres (US5).
-5. **Pages À propos + Contact** + footer piloté par `Profile` (US7).
-6. **Aligner le rendu statique/ISR** (remplacer `no-store`, D3) — valider API Next 16.
-7. **Aligner DB SQLite + durcir `settings.py` + `remotePatterns` via env** (D1 + dette infra).
-8. **Tests contrat API + CI GitHub Actions** (ADR-008).
-9. **Étendre sitemap/robots** aux nouvelles pages + déploiement (ADR-007).
+## Hors périmètre de ce backlog (à traiter ensuite)
+
+Ces points, identifiés par les analyses `input/`, **ne sont pas** dans le backlog dev (relèvent du contenu owner ou d'une phase ultérieure) : preuves projets (liens GitHub, captures, assets réels), dataviz/couche Data, filtres/recherche, contenu « À propos » à rédiger, déploiement effectif, ajout des POC/MVP/prod réels au seed. Voir `input/analyse_comparative_2026-06-24.md`.
