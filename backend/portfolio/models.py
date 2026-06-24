@@ -59,6 +59,7 @@ class Project(models.Model):
     role = models.CharField(max_length=200)
     challenge = models.TextField(blank=True)
     solution = models.TextField(blank=True)
+    results = models.TextField(blank=True)
     lessons_learned = models.TextField(blank=True)
     github_url = models.URLField(blank=True)
     demo_url = models.URLField(blank=True)

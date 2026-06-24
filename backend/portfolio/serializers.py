@@ -36,7 +36,7 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
         model = Project
         fields = [
             'id', 'title', 'slug', 'short_description', 'description',
-            'role', 'challenge', 'solution', 'lessons_learned',
+            'role', 'challenge', 'solution', 'results', 'lessons_learned',
             'github_url', 'demo_url', 'cover_image',
             'start_date', 'end_date', 'featured', 'project_type', 'skills', 'assets',
         ]
