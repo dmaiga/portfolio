@@ -38,6 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <Link href="/projects" className="hover:text-foreground transition-colors duration-200">
                     Projets
                   </Link>
+                  <Link href="/methode" className="hover:text-foreground transition-colors duration-200">
+                    Méthode
+                  </Link>
                 </div>
                 <ThemeToggle />
               </div>
