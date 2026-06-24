@@ -50,6 +50,7 @@ export interface ProjectDetail extends ProjectSummary {
   role: string
   challenge: string
   solution: string
+  results: string
   lessons_learned: string
   github_url: string
   demo_url: string

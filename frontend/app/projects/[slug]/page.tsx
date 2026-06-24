@@ -135,11 +135,11 @@ export default async function ProjectDetailPage({
         )}
       </div>
 
-      {/* Description */}
+      {/* Contexte */}
       {project.description && (
         <section className="space-y-3">
           <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Description
+            Contexte
           </h2>
           <Markdown className="text-sm">{project.description}</Markdown>
         </section>
@@ -158,6 +158,14 @@ export default async function ProjectDetailPage({
         <section className="space-y-3 border-l-2 border-primary/30 pl-4">
           <h2 className="text-base font-semibold">Approche et solution</h2>
           <Markdown className="text-sm text-muted-foreground">{project.solution}</Markdown>
+        </section>
+      )}
+
+      {/* Résultats */}
+      {project.results && (
+        <section className="space-y-3 border-l-2 border-primary/30 pl-4">
+          <h2 className="text-base font-semibold">Résultats</h2>
+          <Markdown className="text-sm text-muted-foreground">{project.results}</Markdown>
         </section>
       )}
 
@@ -183,6 +191,22 @@ export default async function ProjectDetailPage({
             ))}
           </div>
         </section>
+      )}
+
+      {/* ── Bifurcation : tronc commun ci-dessus, détails techniques ci-dessous ── */}
+      {(imageAssets.length > 0 || docAssets.length > 0) && (
+        <div className="pt-4">
+          <div className="flex items-center gap-3">
+            <span className="h-px flex-1 bg-border" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Approfondir
+            </span>
+            <span className="h-px flex-1 bg-border" />
+          </div>
+          <p className="mt-2 text-center text-xs text-muted-foreground">
+            Détails techniques, schémas et artefacts
+          </p>
+        </div>
       )}
 
       {/* Galerie d'images */}
