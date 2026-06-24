@@ -56,6 +56,7 @@ TypeScript est obligatoire. Ne pas utiliser JavaScript sauf exception explicitem
 * Tailwind CSS
 * shadcn/ui
 * next-themes — exception justifiée (Sprint 03) : gère le dark mode sans flash de mauvais thème au chargement ni bug d'hydratation SSR sous App Router, deux pièges réels à refaire à la main. Mono-usage, ne touche pas à la gestion d'état globale interdite ci-dessous.
+* react-markdown + remark-gfm — exception justifiée (étage dev) : rendu des champs riches (description, challenge, solution, leçons, bio) saisis en Markdown depuis l'admin Django. Sûr par défaut (pas de HTML brut interprété). Pas de plugin typography ajouté : le style est porté par `components/markdown.tsx`.
 
 ---
 

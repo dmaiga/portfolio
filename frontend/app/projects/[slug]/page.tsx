@@ -7,6 +7,7 @@ import Image from "next/image"
 import { Star, ExternalLink, FileText } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Markdown } from "@/components/markdown"
 import { mediaUrl } from "@/lib/utils"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
@@ -75,6 +76,7 @@ export default async function ProjectDetailPage({
             src={mediaUrl(project.cover_image, API)}
             alt={project.title}
             fill
+            sizes="(max-width: 768px) 100vw, 768px"
             className="object-cover"
           />
         </div>
@@ -139,7 +141,7 @@ export default async function ProjectDetailPage({
           <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             Description
           </h2>
-          <p className="text-sm leading-relaxed">{project.description}</p>
+          <Markdown className="text-sm">{project.description}</Markdown>
         </section>
       )}
 
@@ -147,7 +149,7 @@ export default async function ProjectDetailPage({
       {project.challenge && (
         <section className="space-y-3 border-l-2 border-primary/30 pl-4">
           <h2 className="text-base font-semibold">Problème à résoudre</h2>
-          <p className="text-sm leading-relaxed text-muted-foreground">{project.challenge}</p>
+          <Markdown className="text-sm text-muted-foreground">{project.challenge}</Markdown>
         </section>
       )}
 
@@ -155,7 +157,7 @@ export default async function ProjectDetailPage({
       {project.solution && (
         <section className="space-y-3 border-l-2 border-primary/30 pl-4">
           <h2 className="text-base font-semibold">Approche et solution</h2>
-          <p className="text-sm leading-relaxed text-muted-foreground">{project.solution}</p>
+          <Markdown className="text-sm text-muted-foreground">{project.solution}</Markdown>
         </section>
       )}
 
@@ -163,7 +165,7 @@ export default async function ProjectDetailPage({
       {project.lessons_learned && (
         <section className="space-y-3 border-l-2 border-primary/30 pl-4">
           <h2 className="text-base font-semibold">Leçons apprises</h2>
-          <p className="text-sm leading-relaxed text-muted-foreground">{project.lessons_learned}</p>
+          <Markdown className="text-sm text-muted-foreground">{project.lessons_learned}</Markdown>
         </section>
       )}
 
@@ -202,6 +204,7 @@ export default async function ProjectDetailPage({
                   src={mediaUrl(asset.file, API)}
                   alt={asset.title}
                   fill
+                  sizes="(max-width: 768px) 50vw, 384px"
                   className="object-cover"
                 />
               </a>

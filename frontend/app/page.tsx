@@ -5,6 +5,7 @@ import { MapPin, Mail, ArrowRight, Download, Database, BarChart3, Server, Code2 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ProjectCard } from "@/components/project-card"
+import { Markdown } from "@/components/markdown"
 import { mediaUrl } from "@/lib/utils"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
@@ -54,10 +55,6 @@ export default async function HomePage() {
             <MapPin className="size-3" />
             Bamako, Mali
           </span>
-          <span className="inline-flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 rounded-full px-3 py-1 bg-emerald-50 dark:bg-emerald-950/30">
-            <span className="size-1.5 rounded-full bg-emerald-500 inline-block" />
-            Disponible
-          </span>
         </div>
 
         {/* Profil principal */}
@@ -69,7 +66,7 @@ export default async function HomePage() {
               width={120}
               height={120}
               className="rounded-2xl object-cover shrink-0 ring-2 ring-primary/20 shadow-sm"
-              priority
+              preload
             />
           )}
           <div className="space-y-4">
@@ -77,7 +74,7 @@ export default async function HomePage() {
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{profile.full_name}</h1>
               <p className="text-lg text-muted-foreground mt-1">{profile.title}</p>
             </div>
-            <p className="text-sm leading-relaxed text-muted-foreground max-w-xl">{profile.bio}</p>
+            <Markdown className="text-sm text-muted-foreground max-w-xl">{profile.bio}</Markdown>
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-3 pt-1">
