@@ -13,8 +13,9 @@ Format par décision : **Décision · Pourquoi · Alternatives écartées**. Hon
 ## ADR-002 — Frontend Next.js : conservé malgré un doute d'overengineering
 *2026-06-24 · Acté, doute assumé*
 - **Décision.** Garder Next.js/React pour le front. Ne pas migrer vers un générateur statique.
-- **Pourquoi.** En greenfield, un SSG (voire des fichiers Markdown) suffirait pour un site quasi lecture seule — mon instinct anti-overengineering est juste sur ce point. Mais (1) le code existe et est sain : le réécrire serait un autre gaspillage ; (2) une app Next réelle, livrée par un non-frontend via orchestration d'agents, **est** la preuve de ma thèse (autonomie de bout en bout, agents montrés et non proclamés). Je conserve donc un choix que je n'aurais pas refait à l'identique, et je l'assume.
+- **Pourquoi.** En greenfield, un SSG (voire des fichiers Markdown) suffirait pour un site quasi lecture seule — mon instinct anti-overengineering est juste sur ce point. La **seule raison solide** de conserver Next est que **le code existe et est sain** : le réécrire serait un autre gaspillage. Je conserve donc un choix que je n'aurais pas refait à l'identique, et je l'assume.
 - **Alternatives écartées.** Migration vers Astro / SSG pur : coût de réécriture non justifié par les objectifs ; risque de courir après la pureté (overengineering inversé).
+- **Révision 2026-06-24 (revue critique).** Ne pas justifier le maintien de Next par « une app Next réelle = preuve de ma thèse » : un site quasi statique en lecture seule n'est pas une app Next impressionnante, l'argument est fragile. La preuve de l'orchestration repose sur les **artefacts** (`DECISIONS.md`, `rules/`, `docs/sprints/`), pas sur le framework.
 - **Risque suivi.** Maintenabilité d'un front hors de mon domaine — atténuée par le rendu statique/ISR (ADR-003) et les règles de simplicité de `STACK.md`.
 
 ## ADR-003 — Rendu statique / ISR (pas de SSR)
@@ -31,6 +32,7 @@ Format par décision : **Décision · Pourquoi · Alternatives écartées**. Hon
 - **Pourquoi.** Site à très faible écriture → la simplicité prime ; pas d'abstraction prématurée. La porte Postgres reste ouverte sans coût aujourd'hui.
 - **Alternatives écartées.** PostgreSQL d'emblée : surcoût opérationnel sans bénéfice au stade actuel.
 - **Risque suivi.** Sur un hébergement à filesystem éphémère, un fichier SQLite peut être perdu au redéploiement → à arbitrer avec l'ADR déploiement (ADR-007).
+- **À porter ailleurs (revue 2026-06-24).** SQLite est un choix de dimensionnement (anti-overengineering), **pas** une démonstration Data. La compétence Data/BI se prouvera par une couche dataviz/données (option D du backlog), pas par la base OLTP d'un site en lecture seule. Sans cette couche, SQLite resterait le symbole d'une promesse non tenue.
 
 ## ADR-005 — Source de vérité documentaire
 *2026-06-24 · Acté*
@@ -53,6 +55,9 @@ Format par décision : **Décision · Pourquoi · Alternatives écartées**. Hon
   - *Favorable à SQLite (ADR-004) :* cPanel a un filesystem persistant → le risque « SQLite perdu au redéploiement » ne s'applique pas.
   - *Django sur cPanel :* à câbler via « Setup Python App » (Passenger/WSGI) chez LWS, plus contraint qu'un VPS — à vérifier au sprint déploiement.
   - *CORS / domaines :* front et back sur des origines distinctes → configuration CORS à confirmer au sprint déploiement.
+  - *Charge backend réduite :* le rendu statique/ISR (ADR-003) ne sollicite cPanel qu'au build et à la revalidation, pas à chaque visiteur → son instabilité éventuelle pèse beaucoup moins, ce qui conforte le split.
+- **Couplage à porter (revue 2026-06-24, ADR-003 × 005 × 007).** Le front statique va chercher les médias chez Django (cPanel), d'où une dépendance dure au domaine cPanel : (a) il doit être autorisé dans `next.config` `remotePatterns` — **déjà couvert**, il suit `NEXT_PUBLIC_API_URL` ; (b) le backend cPanel doit être **joignable au build**, sinon la génération échoue.
+- **Risque principal (revue 2026-06-24).** Django sur cPanel (Passenger/WSGI) est un terrain à pièges : version Python figée par l'hébergeur, pas de vrai gestionnaire de process long, service des médias délicat. **Mitigation : timeboxer l'essai cPanel (1–2 j) et garder un VPS + Docker comme sortie de secours** (déjà dans la stack), pour ne pas arbitrer dans la frustration le jour J.
 
 ## ADR-008 — Périmètre de l'intégration continue
 *2026-06-24 · Ouvert / différé*
