@@ -13,10 +13,23 @@ import { mediaUrl } from "@/lib/utils"
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
 async function fetchProject(slug: string): Promise<ProjectDetail | null> {
-  const res = await fetch(`${API}/api/projects/${slug}/`, { cache: "no-store" })
+  const res = await fetch(`${API}/api/projects/${slug}/`, { next: { revalidate: 3600 } })
   if (res.status === 404) return null
   if (!res.ok) throw new Error("Impossible de charger le projet")
   return res.json()
+}
+
+// Prérend les pages projet connues au build ; les nouveaux slugs sont
+// rendus à la demande puis mis en cache (ISR).
+export async function generateStaticParams() {
+  try {
+    const res = await fetch(`${API}/api/projects/`, { next: { revalidate: 3600 } })
+    if (!res.ok) return []
+    const projects: { slug: string }[] = await res.json()
+    return projects.map((p) => ({ slug: p.slug }))
+  } catch {
+    return []
+  }
 }
 
 export async function generateMetadata({

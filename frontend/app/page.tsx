@@ -13,9 +13,9 @@ const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
 export default async function HomePage() {
   const [profileRes, skillsRes, projectsRes] = await Promise.all([
-    fetch(`${API}/api/profile/`, { cache: "no-store" }),
-    fetch(`${API}/api/skills/`, { cache: "no-store" }),
-    fetch(`${API}/api/projects/`, { cache: "no-store" }),
+    fetch(`${API}/api/profile/`, { next: { revalidate: 3600 } }),
+    fetch(`${API}/api/skills/`, { next: { revalidate: 3600 } }),
+    fetch(`${API}/api/projects/`, { next: { revalidate: 3600 } }),
   ])
 
   if (!profileRes.ok || !skillsRes.ok || !projectsRes.ok) {

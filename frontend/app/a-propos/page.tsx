@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
 export default async function AProposPage() {
-  const res = await fetch(`${API}/api/profile/`, { cache: "no-store" })
+  const res = await fetch(`${API}/api/profile/`, { next: { revalidate: 3600 } })
   if (!res.ok) throw new Error("Impossible de charger le profil")
   const profile: Profile = await res.json()
 

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
 export default async function ProjectsPage() {
-  const res = await fetch(`${API}/api/projects/`, { cache: "no-store" })
+  const res = await fetch(`${API}/api/projects/`, { next: { revalidate: 3600 } })
 
   if (!res.ok) {
     throw new Error("Impossible de charger les projets")
