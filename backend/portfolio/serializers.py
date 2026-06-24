@@ -5,7 +5,7 @@ from .models import Profile, Skill, Project, ProjectAsset
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['full_name', 'title', 'bio', 'photo', 'email', 'github_url', 'linkedin_url', 'cv']
+        fields = ['full_name', 'title', 'bio', 'about', 'photo', 'email', 'github_url', 'linkedin_url', 'cv']
 
 
 class SkillSerializer(serializers.ModelSerializer):

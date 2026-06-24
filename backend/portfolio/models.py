@@ -6,6 +6,7 @@ class Profile(models.Model):
     full_name = models.CharField(max_length=100)
     title = models.CharField(max_length=200)
     bio = models.TextField()
+    about = models.TextField(blank=True)
     photo = models.ImageField(upload_to='profile/', blank=True)
     email = models.EmailField()
     github_url = models.URLField(blank=True)
