@@ -62,7 +62,14 @@ class Project(models.Model):
     solution = models.TextField(blank=True)
     results = models.TextField(blank=True, default="")
     deep_dive = models.TextField(blank=True, default="")
-    lessons_learned = models.TextField(blank=True)
+    lessons_learned = models.TextField(
+        blank=True,
+        help_text=(
+            "Rétrospective d'ingénierie — difficultés réelles, surprises, "
+            "compromis effectués, ce que je referais différemment. "
+            "Pas de vérités génériques."
+        ),
+    )
     github_url = models.URLField(blank=True)
     demo_url = models.URLField(blank=True)
     cover_image = models.ImageField(upload_to='projects/', blank=True)
