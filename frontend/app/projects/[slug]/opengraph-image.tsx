@@ -28,7 +28,7 @@ export default async function Image({
   const { slug } = await params
 
   let title = slug
-  let short_description = ""
+  let summary = ""
   let project_type = ""
 
   try {
@@ -36,7 +36,7 @@ export default async function Image({
     if (res.ok) {
       const project = await res.json()
       title = project.title
-      short_description = project.short_description
+      summary = project.summary
       project_type = project.project_type
     }
   } catch {}
@@ -91,7 +91,7 @@ export default async function Image({
           {title}
         </div>
 
-        {short_description && (
+        {summary && (
           <div
             style={{
               color: "#a1a1aa",
@@ -100,7 +100,7 @@ export default async function Image({
               maxWidth: "900px",
             }}
           >
-            {short_description}
+            {summary}
           </div>
         )}
 

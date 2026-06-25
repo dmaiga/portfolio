@@ -43,7 +43,7 @@ export async function generateMetadata({
     if (project) {
       return {
         title: project.title,
-        description: project.short_description,
+        description: project.summary,
       }
     }
   } catch {}
@@ -70,6 +70,14 @@ export default async function ProjectDetailPage({
 
   const imageAssets = project.assets.filter((a) => a.asset_type === "IMAGE")
   const docAssets = project.assets.filter((a) => a.asset_type !== "IMAGE")
+
+  // La section « Approfondir » n'apparaît que si elle a du contenu :
+  // texte d'approfondissement, rétrospective, galerie ou documents.
+  const hasDeepContent =
+    !!project.deep_dive ||
+    !!project.lessons_learned ||
+    imageAssets.length > 0 ||
+    docAssets.length > 0
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12 space-y-10 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
@@ -109,7 +117,7 @@ export default async function ProjectDetailPage({
           </Badge>
         </div>
 
-        <p className="text-base sm:text-lg text-muted-foreground">{project.short_description}</p>
+        <p className="text-base sm:text-lg text-muted-foreground">{project.summary}</p>
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
           {project.role && (
@@ -149,20 +157,20 @@ export default async function ProjectDetailPage({
       </div>
 
       {/* Contexte */}
-      {project.description && (
+      {project.context && (
         <section className="space-y-3">
           <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
             Contexte
           </h2>
-          <Markdown className="text-sm">{project.description}</Markdown>
+          <Markdown className="text-sm">{project.context}</Markdown>
         </section>
       )}
 
-      {/* Challenge */}
-      {project.challenge && (
+      {/* Problème */}
+      {project.problem && (
         <section className="space-y-3 border-l-2 border-primary/30 pl-4">
           <h2 className="text-base font-semibold">Problème à résoudre</h2>
-          <Markdown className="text-sm text-muted-foreground">{project.challenge}</Markdown>
+          <Markdown className="text-sm text-muted-foreground">{project.problem}</Markdown>
         </section>
       )}
 
@@ -182,14 +190,6 @@ export default async function ProjectDetailPage({
         </section>
       )}
 
-      {/* Leçons apprises */}
-      {project.lessons_learned && (
-        <section className="space-y-3 border-l-2 border-primary/30 pl-4">
-          <h2 className="text-base font-semibold">Leçons apprises</h2>
-          <Markdown className="text-sm text-muted-foreground">{project.lessons_learned}</Markdown>
-        </section>
-      )}
-
       {/* Compétences */}
       {project.skills.length > 0 && (
         <section className="space-y-3">
@@ -206,8 +206,8 @@ export default async function ProjectDetailPage({
         </section>
       )}
 
-      {/* ── Bifurcation : tronc commun ci-dessus, détails techniques ci-dessous ── */}
-      {(imageAssets.length > 0 || docAssets.length > 0) && (
+      {/* ── Bifurcation : tronc commun ci-dessus, approfondissement ci-dessous ── */}
+      {hasDeepContent && (
         <div className="pt-4">
           <div className="flex items-center gap-3">
             <span className="h-px flex-1 bg-border" />
@@ -220,6 +220,22 @@ export default async function ProjectDetailPage({
             Détails techniques, schémas et artefacts
           </p>
         </div>
+      )}
+
+      {/* Approfondissement (texte libre Markdown) */}
+      {project.deep_dive && (
+        <section className="space-y-3 border-l-2 border-primary/30 pl-4">
+          <h2 className="text-base font-semibold">Approfondissement</h2>
+          <Markdown className="text-sm text-muted-foreground">{project.deep_dive}</Markdown>
+        </section>
+      )}
+
+      {/* Leçons apprises (rétrospective) */}
+      {project.lessons_learned && (
+        <section className="space-y-3 border-l-2 border-primary/30 pl-4">
+          <h2 className="text-base font-semibold">Leçons apprises</h2>
+          <Markdown className="text-sm text-muted-foreground">{project.lessons_learned}</Markdown>
+        </section>
       )}
 
       {/* Galerie d'images */}

@@ -39,7 +39,7 @@ export interface ProjectSummary {
   id: number
   title: string
   slug: string
-  short_description: string
+  summary: string
   cover_image: string
   featured: boolean
   project_type: ProjectType
@@ -56,11 +56,12 @@ export interface ProjectAsset {
 }
 
 export interface ProjectDetail extends ProjectSummary {
-  description: string
+  context: string
   role: string
-  challenge: string
+  problem: string
   solution: string
   results: string
+  deep_dive: string
   lessons_learned: string
   github_url: string
   demo_url: string

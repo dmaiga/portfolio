@@ -65,7 +65,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
               </div>
             </div>
             <CardDescription className="text-xs mt-1 line-clamp-2">
-              {project.short_description}
+              {project.summary}
             </CardDescription>
           </CardHeader>
 
