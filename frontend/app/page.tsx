@@ -1,179 +1,151 @@
-import type { Profile, Skill, ProjectSummary } from "@/lib/types"
+import type { Profile, ProjectSummary } from "@/lib/types"
 import Link from "next/link"
 import Image from "next/image"
-import { MapPin, Mail, ArrowRight, Download } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { MapPin, ArrowRight, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ProjectCard } from "@/components/project-card"
 import { Markdown } from "@/components/markdown"
-import { DOMAINS } from "@/lib/domains"
 import { mediaUrl } from "@/lib/utils"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
+// Dépôt du portfolio (specs + code). Vide tant qu'il n'est pas poussé :
+// le lien repo ne s'affiche alors pas — jamais de lien mort.
+const REPO_URL = process.env.NEXT_PUBLIC_REPO_URL ?? ""
+
 export default async function HomePage() {
-  const [profileRes, skillsRes, projectsRes] = await Promise.all([
+  const [profileRes, projectsRes] = await Promise.all([
     fetch(`${API}/api/profile/`, { next: { revalidate: 3600 } }),
-    fetch(`${API}/api/skills/`, { next: { revalidate: 3600 } }),
     fetch(`${API}/api/projects/`, { next: { revalidate: 3600 } }),
   ])
 
-  if (!profileRes.ok || !skillsRes.ok || !projectsRes.ok) {
+  if (!profileRes.ok || !projectsRes.ok) {
     throw new Error("Erreur lors du chargement des données")
   }
 
   const profile: Profile = await profileRes.json()
-  const skills: Skill[] = await skillsRes.json()
   const projects: ProjectSummary[] = await projectsRes.json()
   const featured = projects.filter((p) => p.featured)
 
-  const missionCount = projects.filter(
-    (p) => p.project_type === "PROFESSIONAL" || p.project_type === "CONSULTING",
-  ).length
-
-  const skillsByCategory = skills.reduce<Record<string, Skill[]>>((acc, skill) => {
-    if (!acc[skill.category]) acc[skill.category] = []
-    acc[skill.category].push(skill)
-    return acc
-  }, {})
-
   return (
-    <div className="max-w-5xl mx-auto px-4 py-12 space-y-16">
+    <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="grid md:grid-cols-3 gap-10 md:gap-12 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
 
-      {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500 space-y-8">
+        {/* ── Colonne gauche : identité + démarche (sticky) ────────── */}
+        <aside className="md:col-span-1 space-y-6 md:sticky md:top-20 md:self-start">
 
-        {/* Badges contexte */}
-        <div className="flex flex-wrap gap-2">
-          <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground border rounded-full px-3 py-1">
-            <MapPin className="size-3" />
-            Bamako, Mali
-          </span>
-        </div>
-
-        {/* Profil principal */}
-        <div className="flex flex-col sm:flex-row gap-8 items-start">
-          {profile.photo && (
-            <Image
-              src={mediaUrl(profile.photo, API)}
-              alt={profile.full_name}
-              width={120}
-              height={120}
-              className="rounded-2xl object-cover shrink-0 ring-2 ring-primary/20 shadow-sm"
-              preload
-            />
-          )}
+          {/* Identité */}
           <div className="space-y-4">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{profile.full_name}</h1>
-              <p className="text-lg text-muted-foreground mt-1">{profile.title}</p>
+            {profile.photo && (
+              <Image
+                src={mediaUrl(profile.photo, API)}
+                alt={profile.full_name}
+                width={96}
+                height={96}
+                className="rounded-2xl object-cover ring-2 ring-brand/20 shadow-sm"
+                preload
+              />
+            )}
+            <div className="space-y-1">
+              <h1 className="text-2xl font-bold tracking-tight">{profile.full_name}</h1>
+              <p className="text-muted-foreground">{profile.title}</p>
             </div>
-            <Markdown className="text-sm text-muted-foreground max-w-xl">{profile.bio}</Markdown>
+            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+              <MapPin className="size-3" />
+              Bamako, Mali
+            </span>
+            <Markdown className="text-sm text-muted-foreground">{profile.bio}</Markdown>
+          </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3 pt-1">
-              <Link href="/projects">
-                <Button size="sm">
-                  Voir les projets
-                  <ArrowRight className="size-3.5 ml-1.5" />
-                </Button>
+          {/* Démarche — courte, pointe vers le détail et le dépôt */}
+          <div className="space-y-2 border-t pt-6">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Démarche
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              Owner avant Dev : intentions, décisions et specs versionnées dans le
+              dépôt — avant la moindre ligne de code.
+            </p>
+            <div className="flex flex-col gap-1.5 pt-1 text-sm">
+              <Link
+                href="/a-propos"
+                className="inline-flex items-center gap-1.5 text-brand hover:underline underline-offset-4"
+              >
+                Voir ma démarche
+                <ArrowRight className="size-3.5" />
               </Link>
-              {profile.email && (
-                <a href={`mailto:${profile.email}`}>
+              {REPO_URL && (
+                <a
+                  href={REPO_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors duration-200"
+                >
+                  Code &amp; specs sur GitHub
+                  <ExternalLink className="size-3" />
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* Liens */}
+          {(profile.github_url || profile.linkedin_url) && (
+            <div className="flex flex-wrap gap-2 border-t pt-6">
+              {profile.github_url && (
+                <a href={profile.github_url} target="_blank" rel="noopener noreferrer">
                   <Button variant="outline" size="sm">
-                    <Mail className="size-3.5 mr-1.5" />
-                    Me contacter
+                    <ExternalLink className="size-3.5 mr-1.5" />
+                    GitHub
                   </Button>
                 </a>
               )}
-              {profile.cv && (
-                <a href={mediaUrl(profile.cv, API)} target="_blank" rel="noopener noreferrer">
-                  <Button variant="ghost" size="sm">
-                    <Download className="size-3.5 mr-1.5" />
-                    CV
+              {profile.linkedin_url && (
+                <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="sm">
+                    <ExternalLink className="size-3.5 mr-1.5" />
+                    LinkedIn
                   </Button>
                 </a>
               )}
             </div>
-          </div>
-        </div>
+          )}
+        </aside>
 
-        {/* Stats */}
-        <div className="grid grid-cols-3 divide-x divide-border border rounded-xl">
-          {[
-            { value: projects.length, label: "projets réalisés" },
-            { value: skills.length, label: "compétences" },
-            { value: missionCount, label: "missions clientes" },
-          ].map(({ value, label }) => (
-            <div key={label} className="px-6 py-4 text-center">
-              <div className="text-2xl font-bold text-primary">{value}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">{label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Domaines */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {DOMAINS.map(({ icon: Icon, label }) => (
-            <div
-              key={label}
-              className="flex items-center gap-2.5 rounded-lg border px-4 py-3 bg-muted/40 hover:bg-accent/40 transition-colors duration-200"
-            >
-              <Icon className="size-4 text-primary shrink-0" />
-              <span className="text-xs font-medium leading-tight">{label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── Compétences ──────────────────────────────────────── */}
-      {skills.length > 0 && (
-        <section
-          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500 space-y-6"
-          style={{ "--tw-animation-delay": "150ms" } as React.CSSProperties}
-        >
-          <h2 className="text-xl font-semibold">Compétences</h2>
-          <div className="space-y-5">
-            {Object.entries(skillsByCategory).map(([category, items]) => (
-              <div key={category}>
-                <p className="text-xs font-medium text-muted-foreground uppercase tracking-widest mb-2.5">
-                  {category}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {items.map((skill) => (
-                    <Badge key={skill.id} variant="secondary">
-                      {skill.name}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* ── Projets mis en avant ─────────────────────────────── */}
-      {featured.length > 0 && (
-        <section
-          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500 space-y-6"
-          style={{ "--tw-animation-delay": "300ms" } as React.CSSProperties}
-        >
+        {/* ── Colonne droite : projets mis en avant ────────────────── */}
+        <section className="md:col-span-2 space-y-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">Projets mis en avant</h2>
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Réalisations récentes
+            </h2>
             <Link
               href="/projects"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
-              Voir tous →
+              Voir tout →
             </Link>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {featured.map((project, i) => (
-              <ProjectCard key={project.id} project={project} index={i} />
-            ))}
-          </div>
+
+          {featured.length > 0 ? (
+            <div className="space-y-4">
+              {featured.map((project, i) => (
+                <ProjectCard key={project.id} project={project} index={i} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Les réalisations mises en avant arrivent bientôt.
+            </p>
+          )}
+
+          <Link
+            href="/projects"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg border px-4 py-3 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors duration-200"
+          >
+            Voir toutes les réalisations
+            <ArrowRight className="size-3.5" />
+          </Link>
         </section>
-      )}
+      </div>
     </div>
   )
 }
