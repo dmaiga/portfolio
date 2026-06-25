@@ -52,3 +52,17 @@ Le code est sain et la fondation solide : modèle de données complet (`Profile`
 ## Hors périmètre de ce backlog (à traiter ensuite)
 
 Ces points, identifiés par les analyses `input/`, **ne sont pas** dans le backlog dev (relèvent du contenu owner ou d'une phase ultérieure) : preuves projets (liens GitHub, captures, assets réels), dataviz/couche Data, filtres/recherche, contenu « À propos » à rédiger, déploiement effectif, ajout des POC/MVP/prod réels au seed. Voir `input/analyse_comparative_2026-06-24.md`.
+
+---
+
+## Backlog — prochaine vague (2026-06-25)
+
+| Réf | Item | Statut | Dépendances |
+|---|---|---|---|
+| M1 | **Migration modèle Project** — renommage `short_description→summary`, `description→context`, `challenge→problem` + ajout `results` (TextField) et `deep_dive` (TextField, Markdown) | ❌ | Une migration, un commit `feat(model): align project fields with parcours` |
+| M2 | **Supprimer /methode** — retirer la page et la nav entry ; intégrer la section Démarche dans `/a-propos` | ❌ | `05-archi-info.md` mis à jour (2026-06-25) |
+| M3 | Serializer + API — exposer les nouveaux champs (`summary`, `context`, `problem`, `results`, `deep_dive`) | ❌ | Après M1 |
+| M4 | Front — consommer les nouveaux champs sur la page projet détail | ❌ | Après M3 |
+| M5 | Seed — repeupler avec les nouveaux noms de champs + contenu réel | ❌ | Après M1 · owner |
+
+> **Note M1 :** "relabel Contexte" dans l'entrée US2 ci-dessus était un relabel d'affichage front (label `description` → `Contexte`), pas un rename DB. Le rename DB reste à faire dans M1.

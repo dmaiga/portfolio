@@ -26,13 +26,16 @@ Portfolio professionnel (Django REST headless + Next.js) servant de **bragsheet*
 
 ---
 
-## Phase actuelle : Sprint Owner (cadrage rétroactif)
+## Phase actuelle : Sprint dev — Migration modèle + Refonte UI/UX
 
-Brief complet : **`docs/sprints/sprint-owner.md`**. Tant que ce sprint n'est pas validé par l'auteur :
+Sprint owner **clos et validé**. La couche owner (`docs/00` → `docs/08`) est la source de vérité de l'intention — ne pas la modifier sans accord explicite de l'auteur.
 
-- **Tu ne modifies AUCUN code.**
-- **Tu ne fabriques PAS le contenu owner.** Tu interroges l'auteur (2–4 questions par document), tu rédiges à partir de ses réponses uniquement, il valide avant de passer au document suivant.
-- Un document à la fois. Chaque fichier owner tient en un écran.
+Brief complet du sprint en cours : **`docs/sprints/sprint-model-ui.md`**.
+
+Séquence à respecter :
+- **Phase 1 d'abord** (M1 → M5 : migration modèle, serializer, front, seed, suppression `/methode`).
+- **Phase 2 seulement après validation Phase 1** par l'auteur (tokens → typographie → composants page par page).
+- CI verte à chaque fin de phase avant de continuer.
 
 ---
 
