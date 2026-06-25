@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Markdown } from "@/components/markdown"
 import { mediaUrl } from "@/lib/utils"
+import { REVALIDATE } from "@/lib/config"
 
 export const metadata: Metadata = {
   title: "À propos",
@@ -85,7 +86,7 @@ function ArtifactList({ items }: { items: Artifact[] }) {
 
 async function getJson<T>(path: string, fallback: T): Promise<T> {
   try {
-    const res = await fetch(`${API}${path}`, { next: { revalidate: 3600 } })
+    const res = await fetch(`${API}${path}`, { next: { revalidate: REVALIDATE } })
     if (!res.ok) return fallback
     return res.json()
   } catch {
@@ -94,7 +95,7 @@ async function getJson<T>(path: string, fallback: T): Promise<T> {
 }
 
 export default async function AProposPage() {
-  const profileRes = await fetch(`${API}/api/profile/`, { next: { revalidate: 3600 } })
+  const profileRes = await fetch(`${API}/api/profile/`, { next: { revalidate: REVALIDATE } })
   if (!profileRes.ok) throw new Error("Impossible de charger le profil")
   const profile: Profile = await profileRes.json()
 
@@ -118,13 +119,15 @@ export default async function AProposPage() {
         {/* ── Colonne gauche : identité (sticky) ───────────────────── */}
         <aside className="md:col-span-1 space-y-6 md:sticky md:top-20 md:self-start">
           {profile.photo && (
-            <Image
-              src={mediaUrl(profile.photo, API)}
-              alt={profile.full_name}
-              width={112}
-              height={112}
-              className="rounded-2xl object-cover ring-2 ring-brand/20 shadow-sm"
-            />
+            <div className="relative size-28 overflow-hidden rounded-2xl ring-2 ring-brand/20 shadow-sm">
+              <Image
+                src={mediaUrl(profile.photo, API)}
+                alt={profile.full_name}
+                fill
+                sizes="112px"
+                className="object-cover"
+              />
+            </div>
           )}
           <div className="space-y-1">
             <h1 className="text-2xl font-bold tracking-tight">{profile.full_name}</h1>

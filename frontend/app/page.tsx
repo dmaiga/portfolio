@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { ProjectCard } from "@/components/project-card"
 import { Markdown } from "@/components/markdown"
 import { mediaUrl } from "@/lib/utils"
+import { REVALIDATE } from "@/lib/config"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
@@ -15,8 +16,8 @@ const REPO_URL = process.env.NEXT_PUBLIC_REPO_URL ?? ""
 
 export default async function HomePage() {
   const [profileRes, projectsRes] = await Promise.all([
-    fetch(`${API}/api/profile/`, { next: { revalidate: 3600 } }),
-    fetch(`${API}/api/projects/`, { next: { revalidate: 3600 } }),
+    fetch(`${API}/api/profile/`, { next: { revalidate: REVALIDATE } }),
+    fetch(`${API}/api/projects/`, { next: { revalidate: REVALIDATE } }),
   ])
 
   if (!profileRes.ok || !projectsRes.ok) {
@@ -37,14 +38,15 @@ export default async function HomePage() {
           {/* Identité */}
           <div className="space-y-4">
             {profile.photo && (
-              <Image
-                src={mediaUrl(profile.photo, API)}
-                alt={profile.full_name}
-                width={96}
-                height={96}
-                className="rounded-2xl object-cover ring-2 ring-brand/20 shadow-sm"
-                preload
-              />
+              <div className="relative size-24 overflow-hidden rounded-2xl ring-2 ring-brand/20 shadow-sm">
+                <Image
+                  src={mediaUrl(profile.photo, API)}
+                  alt={profile.full_name}
+                  fill
+                  sizes="96px"
+                  className="object-cover"
+                />
+              </div>
             )}
             <div className="space-y-1">
               <h1 className="text-2xl font-bold tracking-tight">{profile.full_name}</h1>

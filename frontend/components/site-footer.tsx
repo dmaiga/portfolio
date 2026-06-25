@@ -1,4 +1,5 @@
 import type { Profile } from "@/lib/types"
+import { REVALIDATE } from "@/lib/config"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
@@ -6,7 +7,7 @@ const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 // on dégrade au lieu de casser le chrome présent sur toutes les pages.
 async function getProfile(): Promise<Profile | null> {
   try {
-    const res = await fetch(`${API}/api/profile/`, { next: { revalidate: 3600 } })
+    const res = await fetch(`${API}/api/profile/`, { next: { revalidate: REVALIDATE } })
     if (!res.ok) return null
     return res.json()
   } catch {

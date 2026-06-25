@@ -3,6 +3,7 @@ import type { Profile } from "@/lib/types"
 import { Mail, Download, ArrowUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { mediaUrl } from "@/lib/utils"
+import { REVALIDATE } from "@/lib/config"
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -16,7 +17,7 @@ const displayUrl = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").replace(
 type Channel = { label: string; value: string; href: string; external?: boolean }
 
 export default async function ContactPage() {
-  const res = await fetch(`${API}/api/profile/`, { next: { revalidate: 3600 } })
+  const res = await fetch(`${API}/api/profile/`, { next: { revalidate: REVALIDATE } })
   if (!res.ok) throw new Error("Impossible de charger le profil")
   const profile: Profile = await res.json()
 

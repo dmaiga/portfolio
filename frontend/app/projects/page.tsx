@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import type { ProjectSummary } from "@/lib/types"
 import { ProjectsBrowser } from "@/components/projects-browser"
+import { REVALIDATE } from "@/lib/config"
 
 export const metadata: Metadata = {
   title: "Réalisations",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
 export default async function ProjectsPage() {
-  const res = await fetch(`${API}/api/projects/`, { next: { revalidate: 3600 } })
+  const res = await fetch(`${API}/api/projects/`, { next: { revalidate: REVALIDATE } })
 
   if (!res.ok) {
     throw new Error("Impossible de charger les projets")

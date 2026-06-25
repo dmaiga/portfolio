@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next"
 
+import { REVALIDATE } from "@/lib/config"
+
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mdmaiga.dev"
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
@@ -12,7 +14,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   try {
-    const res = await fetch(`${API}/api/projects/`, { next: { revalidate: 3600 } })
+    const res = await fetch(`${API}/api/projects/`, { next: { revalidate: REVALIDATE } })
     if (res.ok) {
       const projects: { slug: string }[] = await res.json()
       return [

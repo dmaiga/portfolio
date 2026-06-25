@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Markdown } from "@/components/markdown"
 import { mediaUrl } from "@/lib/utils"
+import { REVALIDATE } from "@/lib/config"
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
@@ -28,7 +29,7 @@ const IMAGE_EXT = /\.(png|jpe?g|webp|gif|svg|avif)$/i
 const isImageFile = (path: string) => IMAGE_EXT.test(path.split("?")[0])
 
 async function fetchProject(slug: string): Promise<ProjectDetail | null> {
-  const res = await fetch(`${API}/api/projects/${slug}/`, { next: { revalidate: 3600 } })
+  const res = await fetch(`${API}/api/projects/${slug}/`, { next: { revalidate: REVALIDATE } })
   if (res.status === 404) return null
   if (!res.ok) throw new Error("Impossible de charger le projet")
   return res.json()
@@ -36,7 +37,7 @@ async function fetchProject(slug: string): Promise<ProjectDetail | null> {
 
 async function fetchProjects(): Promise<ProjectSummary[]> {
   try {
-    const res = await fetch(`${API}/api/projects/`, { next: { revalidate: 3600 } })
+    const res = await fetch(`${API}/api/projects/`, { next: { revalidate: REVALIDATE } })
     if (!res.ok) return []
     return res.json()
   } catch {
