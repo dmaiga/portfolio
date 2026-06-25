@@ -39,4 +39,4 @@ Architecture cible (ADR-007) : **frontend Next.js sur Vercel** (statique/ISR), *
 - **Revalidation à la demande** : toute écriture admin (Project, ProjectAsset, Profile, Skill) déclenche un signal Django qui appelle `POST https://<front>/api/revalidate` → purge immédiate du cache ISR. Conditions :
   - `FRONTEND_REVALIDATE_URL` (back) et `REVALIDATE_SECRET` (back **et** Vercel) renseignés, **secret identique des deux côtés** ; sinon la route répond 401/500 et le contenu n'est pas rafraîchi.
   - Le backend cPanel doit pouvoir émettre une requête **sortante HTTPS** vers Vercel (pas de blocage egress). Si ce n'est pas le cas, l'enregistrement reste OK (tolérant aux pannes) mais le front ne se rafraîchit qu'au bout de la fenêtre ISR.
-  - **Filet ISR** : 1 semaine (`frontend/lib/config.ts`). Si la revalidation à la demande est indisponible, une modif admin apparaît au plus tard après ce délai (ou via redéploiement).
+  - **Filet ISR** : 1 h (`frontend/lib/config.ts`, constante `REVALIDATE`). Si la revalidation à la demande est indisponible (egress bloqué), une modif admin apparaît au plus tard après ce délai (ou via redéploiement). Ajuster la constante si besoin.
