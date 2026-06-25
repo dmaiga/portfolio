@@ -1,10 +1,15 @@
 from pathlib import Path
 import os
+import sys
 from dotenv import load_dotenv
 
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Vrai pendant `manage.py test` : neutralise les effets de bord réseau
+# (ex. revalidation du frontend) durant la suite de tests.
+TESTING = 'test' in sys.argv
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-a-remplacer')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
@@ -19,12 +24,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'portfolio',
+    'portfolio.apps.PortfolioConfig',
 ]
 
 CORS_ALLOWED_ORIGINS = os.environ.get(
     'CORS_ALLOWED_ORIGINS', 'http://localhost:3000'
 ).split(',')
+
+# Revalidation à la demande du frontend (ISR Next.js).
+# À chaque écriture sur le contenu (Project, ProjectAsset, Profile, Skill),
+# un signal appelle cette URL pour purger le cache des pages concernées.
+# Vide => revalidation désactivée (CI, ou backend sans front en face).
+FRONTEND_REVALIDATE_URL = os.environ.get('FRONTEND_REVALIDATE_URL', '')
+REVALIDATE_SECRET = os.environ.get('REVALIDATE_SECRET', '')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
