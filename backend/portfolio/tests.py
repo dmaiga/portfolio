@@ -43,8 +43,8 @@ class ProjectsApiTests(TestCase):
         self.project = Project.objects.create(
             project_type=ProjectType.PROFESSIONAL,
             title="Big Data", slug="big-data",
-            short_description="résumé", description="desc",
-            role="Lead", results="des résultats",
+            summary="résumé", context="contexte",
+            role="Lead", problem="le problème", results="des résultats",
         )
         self.project.skills.add(self.skill)
 
@@ -55,6 +55,7 @@ class ProjectsApiTests(TestCase):
         self.assertEqual(len(data), 1)
         item = data[0]
         self.assertEqual(item["slug"], "big-data")
+        self.assertEqual(item["summary"], "résumé")
         self.assertEqual(item["project_type"], "PROFESSIONAL")
         self.assertEqual(len(item["skills"]), 1)
         # results n'appartient qu'au détail, pas à la liste
@@ -64,8 +65,12 @@ class ProjectsApiTests(TestCase):
         res = self.client.get("/api/projects/big-data/")
         self.assertEqual(res.status_code, 200)
         data = res.json()
+        self.assertEqual(data["context"], "contexte")
+        self.assertEqual(data["problem"], "le problème")
         self.assertEqual(data["results"], "des résultats")
-        self.assertIn("assets", data)
+        # nouveaux champs du parcours exposés par le contrat
+        for field in ("summary", "deep_dive", "lessons_learned", "assets"):
+            self.assertIn(field, data)
 
     def test_detail_returns_404_for_unknown_slug(self):
         self.assertEqual(self.client.get("/api/projects/inconnu/").status_code, 404)

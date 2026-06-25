@@ -25,7 +25,7 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'title', 'slug', 'short_description', 'cover_image', 'featured', 'project_type', 'start_date', 'end_date', 'skills']
+        fields = ['id', 'title', 'slug', 'summary', 'cover_image', 'featured', 'project_type', 'start_date', 'end_date', 'skills']
 
 
 class ProjectDetailSerializer(serializers.ModelSerializer):
@@ -35,8 +35,8 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = [
-            'id', 'title', 'slug', 'short_description', 'description',
-            'role', 'challenge', 'solution', 'results', 'lessons_learned',
+            'id', 'title', 'slug', 'summary', 'context',
+            'role', 'problem', 'solution', 'results', 'deep_dive', 'lessons_learned',
             'github_url', 'demo_url', 'cover_image',
             'start_date', 'end_date', 'featured', 'project_type', 'skills', 'assets',
         ]
