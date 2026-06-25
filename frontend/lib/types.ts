@@ -40,6 +40,7 @@ export interface ProjectSummary {
   title: string
   slug: string
   summary: string
+  role: string
   cover_image: string
   featured: boolean
   project_type: ProjectType
@@ -57,7 +58,6 @@ export interface ProjectAsset {
 
 export interface ProjectDetail extends ProjectSummary {
   context: string
-  role: string
   problem: string
   solution: string
   results: string

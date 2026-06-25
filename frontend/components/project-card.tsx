@@ -34,6 +34,11 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
           {project.title}
         </h3>
 
+        {/* Rôle tenu */}
+        {project.role && (
+          <p className="mt-1 text-xs font-medium text-foreground/70">{project.role}</p>
+        )}
+
         {/* Accroche — résumé / problème résolu */}
         <p className="mt-1.5 line-clamp-3 text-xs leading-relaxed text-muted-foreground">
           {project.summary}
