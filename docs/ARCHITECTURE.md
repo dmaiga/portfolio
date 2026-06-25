@@ -81,23 +81,25 @@ Représente une réalisation, quelle que soit son origine (emploi, mission, acad
 
 ### Champs
 
-| Champ             | Type    |
-| ----------------- | ------- |
-| project_type      | enum    |
-| title             | string  |
-| slug              | slug    |
-| short_description | string  |
-| description       | text    |
-| role              | string  |
-| challenge         | text    |
-| solution          | text    |
-| lessons_learned   | text    |
-| github_url        | url     |
-| demo_url          | url     |
-| cover_image       | image   |
-| start_date        | date    |
-| end_date          | date    |
-| featured          | boolean |
+| Champ           | Type    | Section parcours            | Notes |
+| --------------- | ------- | --------------------------- | ----- |
+| project_type    | enum    | —                           | |
+| title           | string  | —                           | |
+| slug            | slug    | —                           | |
+| summary         | string  | Résumé                      | ex `short_description` |
+| context         | text    | Contexte / état des lieux   | ex `description` |
+| role            | string  | —                           | |
+| problem         | text    | Problème                    | ex `challenge` |
+| solution        | text    | Solution                    | |
+| results         | text    | Résultats                   | nouveau |
+| deep_dive       | text    | Approfondir (texte inline)  | nouveau — Markdown libre |
+| lessons_learned | text    | Approfondir (rétro)         | sort du tronc principal |
+| github_url      | url     | Approfondir                 | conditionnel |
+| demo_url        | url     | Approfondir                 | conditionnel |
+| cover_image     | image   | —                           | |
+| start_date      | date    | —                           | |
+| end_date        | date    | —                           | |
+| featured        | boolean | —                           | |
 
 ### Project Types
 
@@ -109,6 +111,8 @@ Représente une réalisation, quelle que soit son origine (emploi, mission, acad
 | PERSONAL     | Side project, expérimentation, open source  |
 
 `project_type` ajouté en Sprint 04, a nécessité une migration sur le backend Sprint 1 déjà livré — un seul champ, pas de breaking change.
+
+> **Migration M1 en cours (2026-06-25)** : renommage `short_description→summary`, `description→context`, `challenge→problem` + ajout `deep_dive`. Le champ `results` existe déjà. Voir `docs/sprints/sprint-model-ui.md`.
 
 ### Relations
 
@@ -223,15 +227,19 @@ Retourne la liste des projets.
     "id": 1,
     "title": "DAMS",
     "slug": "dams",
-    "short_description": "...",
+    "summary": "...",
+    "role": "...",
     "featured": true,
     "project_type": "PROFESSIONAL",
     "start_date": "2023-01-01",
     "end_date": null,
-    "cover_image": null
+    "cover_image": null,
+    "skills": []
   }
 ]
 ```
+
+> `role` est exposé dès la liste : la carte projet doit afficher le rôle tenu (décideur, architecte, exécutant) sans charger le détail.
 
 ---
 
@@ -246,11 +254,13 @@ Retourne le détail d'un projet.
   "id": 1,
   "title": "DAMS",
   "slug": "dams",
-  "short_description": "...",
-  "description": "...",
+  "summary": "...",
+  "context": "...",
   "role": "...",
-  "challenge": "...",
+  "problem": "...",
   "solution": "...",
+  "results": "...",
+  "deep_dive": "...",
   "lessons_learned": "...",
   "github_url": "",
   "demo_url": "",
@@ -263,6 +273,9 @@ Retourne le détail d'un projet.
   "assets": []
 }
 ```
+
+> `deep_dive` et `lessons_learned` sont affichés uniquement dans la section Approfondir (conditionnelle).
+> `github_url`, `demo_url` et `assets` sont affichés uniquement s'ils existent — pas de lien mort.
 
 ---
 
@@ -334,21 +347,19 @@ Pas de retry automatique, pas de cache d'erreur en V1. Conventions natives Next.
 | 2 | Frontend Next.js : layout, pages | Livré |
 | 3 | UI/UX — hygiène de base : responsive, dark mode, animations génériques | Livré |
 | 4 | Identité visuelle : palette, typographie, hero, cartes projets enrichies (`project_type`) | Livré |
+| Owner | Couche owner `docs/00`→`08` + audit backlog dev | Livré |
+| Dev-1 | Page Méthode, rendu Markdown, ISR, tests, CI, SEO, sécurité | Livré |
 
-## Phase actuelle : cadrage rétroactif
+## Phase actuelle : Migration modèle + Refonte UI/UX
 
-**Sprint Owner** — production de la couche owner (`docs/00-vision.md` … `docs/08-backlog.md`), puis audit du code existant contre les critères d'acceptation. Le code n'est pas réécrit ; les écarts deviennent le backlog dev. Détail : `docs/sprints/sprint-owner.md`.
+Brief : `docs/sprints/sprint-model-ui.md`.
 
-## Sprints à venir (backlog issu de l'audit owner → dev)
+**Phase 1 — Migration modèle (M1→M5)**
+- M1 : renommage `short_description→summary`, `description→context`, `challenge→problem` + ajout `deep_dive` (`results` déjà existant).
+- M2 : suppression `/methode`, intégration Démarche dans `/a-propos`.
+- M3 : serializer + API alignés sur nouveaux noms.
+- M4 : front consomme les nouveaux champs.
+- M5 : seed mis à jour.
 
-Ordre cible (figé définitivement dans `docs/sprints/` une fois l'audit produit) :
-
-1. Page Méthode / Making-of (surface la couche owner)
-2. Fix hero « Disponible » + rendu Markdown des champs riches
-3. Tests contrat API + CI GitHub Actions
-4. Fix `remotePatterns` (env) + durcissement `settings.py`
-5. Déploiement (Django headless + Next statique/ISR)
-6. Dataviz / couche Data
-7. Preuves projets, filtres, page À propos, finitions
-
-Détail tâche par tâche de chaque sprint : voir `docs/sprints/sprint-0X.md`.
+**Phase 2 — Refonte UI/UX** (après validation Phase 1)
+Tokens dark/light → typographie → composants page par page selon `docs/wireframes.jsx` et `docs/06-identite-visuelle.md`.
