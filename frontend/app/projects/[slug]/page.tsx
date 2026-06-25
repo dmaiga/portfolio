@@ -341,10 +341,10 @@ export default async function ProjectDetailPage({
             </section>
           )}
 
-          {/* Leçons apprises (rétrospective) */}
+          {/* Retour d'expérience (rétrospective d'ingénierie) */}
           {project.lessons_learned && (
             <section className="space-y-3 border-l-2 border-brand/30 pl-4">
-              <h2 className="text-base font-semibold">Leçons apprises</h2>
+              <h2 className="text-base font-semibold">Retour d&apos;expérience</h2>
               <Markdown className="text-sm text-muted-foreground">{project.lessons_learned}</Markdown>
             </section>
           )}
