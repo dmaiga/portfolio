@@ -5,6 +5,20 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Tokens sémantiques (source de vérité — voir docs/06-identite-visuelle.md).
+     Les couleurs du codebase passent par ces tokens ; next-themes switche
+     leurs valeurs brutes selon le mode. Génèrent les utilitaires bg-bg,
+     bg-surface, text-text, text-text-muted, bg-brand, text-cyan, etc.
+     Note : le cyan du doc (« accent ») est exposé sous le nom `cyan` car
+     l'utilitaire `accent` est déjà pris par la teinte de survol shadcn. */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-cyan: var(--cyan);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
@@ -49,24 +63,37 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.511 0.262 276);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.94 0.04 276);
-  --accent-foreground: oklch(0.35 0.15 276);
+  /* ── Tokens sémantiques — Light mode ──
+     Palette : 80 % neutres cool-gray · 15 % bleu profond · 5 % cyan.
+     Contraste texte/fond ≥ WCAG AA. */
+  --bg: oklch(0.985 0.002 255);          /* fond de page, gris très clair */
+  --surface: oklch(1 0 0);               /* cartes, sections (blanc surélevé) */
+  --edge: oklch(0.915 0.004 255);        /* bordures, séparateurs */
+  --text: oklch(0.21 0.012 260);         /* corps de texte, quasi-noir */
+  --text-muted: oklch(0.46 0.012 260);   /* texte secondaire (AA sur --bg) */
+  --brand: oklch(0.48 0.16 258);         /* bleu profond */
+  --brand-foreground: oklch(0.985 0.005 255);
+  --cyan: oklch(0.68 0.12 205);          /* accent cyan discret */
+
+  /* ── Primitives shadcn ré-ancrées sur les tokens ci-dessus ── */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface);
+  --popover-foreground: var(--text);
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
+  --secondary: oklch(0.965 0.003 255);
+  --secondary-foreground: var(--text);
+  --muted: oklch(0.965 0.003 255);
+  --muted-foreground: var(--text-muted);
+  --accent: oklch(0.95 0.025 205);       /* teinte de survol, cyan très dilué */
+  --accent-foreground: var(--brand);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.511 0.262 276);
+  --border: var(--edge);
+  --input: var(--edge);
+  --ring: var(--brand);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -84,24 +111,36 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.673 0.182 277);
-  --primary-foreground: oklch(0.13 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.25 0.06 277);
-  --accent-foreground: oklch(0.75 0.15 277);
+  /* ── Tokens sémantiques — Dark mode ──
+     Fond near-black navy, texte blanc cassé, bleu/cyan légèrement désaturés. */
+  --bg: oklch(0.165 0.012 260);
+  --surface: oklch(0.205 0.013 260);
+  --edge: oklch(1 0 0 / 12%);
+  --text: oklch(0.97 0.003 255);
+  --text-muted: oklch(0.71 0.008 258);
+  --brand: oklch(0.70 0.14 260);
+  --brand-foreground: oklch(0.16 0.02 260);
+  --cyan: oklch(0.78 0.105 200);
+
+  /* ── Primitives shadcn ré-ancrées ── */
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface);
+  --popover-foreground: var(--text);
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
+  --secondary: oklch(0.255 0.01 260);
+  --secondary-foreground: var(--text);
+  --muted: oklch(0.255 0.01 260);
+  --muted-foreground: var(--text-muted);
+  --accent: oklch(0.27 0.05 205);        /* teinte de survol cyan, sombre */
+  --accent-foreground: oklch(0.80 0.11 200);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.673 0.182 277);
+  --border: var(--edge);
+  --input: oklch(1 0 0 / 16%);
+  --ring: var(--brand);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
