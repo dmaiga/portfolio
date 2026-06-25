@@ -17,7 +17,6 @@ from django.core.management.base import BaseCommand
 # Note d'architecture : Ajuste les imports selon le nom exact de tes modèles
 from portfolio.models import Profile, Project, ProjectAsset, Skill
 
-
 SKILLS = [
     # Data Engineering & Analytics
     ("Python", "Data Engineering & Analytics"),
@@ -25,6 +24,16 @@ SKILLS = [
     ("Apache Spark", "Data Engineering & Analytics"),
     ("Apache Flink", "Data Engineering & Analytics"),
     ("Apache Kafka", "Data Engineering & Analytics"),
+
+    # Architecture & Systèmes d'Information
+    ("Architecture Applicative", "Architecture & SI"),
+    ("Modélisation de Données", "Architecture & SI"),
+    ("Contrôle d'Accès (RBAC)", "Architecture & SI"),
+    ("Audit & Traçabilité", "Architecture & SI"),
+    ("Gestion Documentaire", "Architecture & SI"),
+    ("Conception de Workflow Métier", "Architecture & SI"),
+    ("Architecture SIRH", "Architecture & SI"),
+    
     # ETL/ELT & Business Intelligence
     ("dbt Core", "ETL/ELT & BI"),
     ("Airflow", "ETL/ELT & BI"),
@@ -32,17 +41,20 @@ SKILLS = [
     ("Metabase", "ETL/ELT & BI"),
     ("Power BI", "ETL/ELT & BI"),
     ("Modélisation dimensionnelle", "ETL/ELT & BI"),
+
     # Systèmes d'Information & Développement
     ("Django", "Systèmes d'Information & Dev"),
     ("Django REST Framework", "Systèmes d'Information & Dev"),
     ("JavaScript", "Systèmes d'Information & Dev"),
     ("Conception et intégration d'API REST", "Systèmes d'Information & Dev"),
+
     # Bases de données & Stockage
     ("PostgreSQL", "Bases de Données & Stockage"),
     ("MySQL", "Bases de Données & Stockage"),
     ("BigQuery", "Bases de Données & Stockage"),
     ("Amazon S3", "Bases de Données & Stockage"),
     ("MinIO", "Bases de Données & Stockage"),
+
     # Cloud & Infrastructure
     ("AWS", "Cloud & Infrastructure"),
     ("Google Cloud", "Cloud & Infrastructure"),
@@ -55,98 +67,280 @@ PROJECTS = [
     # CATEGORIE 1 : EXPÉRIENCES PROFESSIONNELLES (EN ENTREPRISE)
     # =========================================================================
     {
-        "title": "Antarès RH — Plateforme RH Intégrée",
-        "slug": "antares-rh",
-        "project_type": "PROFESSIONAL",  # Distinction claire du type
-        "summary": "Système d'information RH intégré couvrant la gestion des talents, des candidats et l'archivage numérique.",
-        "context": (
-            "Développement et architecture de la plateforme Antarès RH. Intervention sur l'ensemble "
-            "du cycle de vie du système, depuis l'analyse fonctionnelle des parcours utilisateurs "
-            "jusqu'au déploiement de modules de gestion des candidats, des offres d'emploi et d'un CMS multilingue."
-        ),
-        "role": "Assistant Data et Informatique (Référent Technique)",
-        "problem": (
-            "L'enjeu consistait à concevoir un système modulaire capable de centraliser la gestion documentaire "
-            "et le cycle de vie des talents, tout en garantissant des mécanismes stricts de sécurité, "
-            "de contrôle d'accès et de traçabilité des dossiers candidats."
-        ),
-        "solution": (
-            "Mise en œuvre d'une architecture applicative robuste sous Django. Structuration des workflows métier "
-            "et modélisation d'un système de gestion documentaire et d'archivage numérique. Intégration d'un espace "
-            "candidat autonome et d'un tableau de bord d'administration pour les équipes de GRH."
-        ),
+    "title": "Antarès RH — SIRH Modulaire & Plateforme de Gestion des Talents",
+    "slug":"antares-rh",
+    "project_type": "PROFESSIONAL",
+    "summary": (
+        "Système d'information RH modulaire conçu pour centraliser le recrutement, "
+        "la gestion des talents, la gestion documentaire, les contenus RH et "
+        "l'automatisation de processus métiers au sein d'une plateforme unifiée."
+    ),
+
+    "context": (
+        "Participation à la conception et au développement du SIRH Antarès RH, "
+        "une plateforme modulaire destinée à couvrir l'ensemble du cycle de vie "
+        "des talents : acquisition, recrutement, intégration, gestion documentaire "
+        "et services RH. Le projet vise à fournir une base technologique évolutive "
+        "capable de supporter à terme un ATS complet, un vivier de talents, "
+        "des workflows RH avancés et des services d'automatisation documentaire."
+    ),
+
+    "role": "Référent Technique / Architecte Applicatif",
+
+    "problem": (
+        "Les processus RH reposaient sur des outils dispersés, des traitements "
+        "manuels et une faible centralisation des informations. L'objectif était "
+        "de construire une plateforme unique capable de gérer les parcours "
+        "candidats, les opportunités, les contenus RH, les dossiers documentaires "
+        "et les futurs processus de recrutement tout en garantissant sécurité, "
+        "traçabilité et évolutivité."
+    ),
+
+    "solution": (
+        "Conception d'une architecture modulaire sous Django et Django REST Framework. "
+        "Développement d'un portail candidat autonome, d'un système de gestion "
+        "des opportunités (emplois, appels d'offres, formations, événements), "
+        "d'un espace collaborateur, d'un CMS RH multilingue, d'un espace "
+        "d'administration RH et de mécanismes de gestion documentaire sécurisés. "
+        "Développement d'un moteur Payroll Audit destiné à automatiser la "
+        "préparation des paiements à partir des bulletins de paie et à réduire "
+        "les risques d'erreurs opérationnelles."
+    ),
+
+    "results": (
+        "Plateforme déployée en production et déjà utilisée par des candidats "
+        "et utilisateurs réels. Les modules opérationnels couvrent la vitrine "
+        "institutionnelle, le portail candidat, la publication d'offres d'emploi, "
+        "d'appels d'offres, de stages et de ressources RH, ainsi qu'un espace "
+        "collaborateur et un espace RH dédiés. Au cours des premières semaines "
+        "d'exploitation, la plateforme a enregistré plus de 450 pages vues, "
+        "206 visites et 125 visiteurs uniques avec un temps moyen de consultation "
+        "proche de cinq minutes par visite. Des utilisateurs créent déjà leur "
+        "compte, consultent les ressources disponibles et interagissent avec "
+        "les opportunités publiées."
+    ),
+
+    "deep_dive": (
+        "L'écosystème repose sur plusieurs domaines spécialisés : site public, "
+        "portail candidat, gestion des opportunités, gestion des collaborateurs, "
+        "CMS RH multilingue, espace RH et moteur documentaire. Les modules "
+        "appliquent des mécanismes d'isolation des données, de contrôle d'accès, "
+        "de traçabilité et de gestion documentaire. L'architecture prépare "
+        "également l'intégration progressive d'un ATS, d'un vivier de talents, "
+        "de moteurs de matching et de services d'automatisation RH."
+    ),
+
         "lessons_learned": (
-            "La maîtrise de la gouvernance documentaire et de l'alignement avec les besoins métiers "
-            "est cruciale. L'isolation des rôles et l'implémentation de la traçabilité des validations "
-            "dès la conception évitent d'importantes réécritures d'architecture en phase de production."
+            "La maîtrise de la gouvernance documentaire et de l'alignement avec les "
+            "besoins métiers est cruciale. L'isolation des rôles et l'implémentation "
+            "de la traçabilité des validations dès la conception évitent "
+            "d'importantes réécritures d'architecture en phase de production."
         ),
         "github_url": "",
-        "demo_url": "",
+        "demo_url": "https://antares-rh.com/",
         "featured": True,
-        "skills": ["Python", "Django", "Django REST Framework", "PostgreSQL", "Docker & Docker Compose", "Git & GitHub Actions"],
+        "start_date": "2025-06-01",
+        "skills": [
+            "Python",
+            "Django",
+            "Django REST Framework",
+            "PostgreSQL",
+            "Docker & Docker Compose",
+            "Git & GitHub Actions",
+        ],
     },
+
     {
-        "title": "DAMS — Plateforme Opérationnelle et Décisionnelle",
-        "slug": "dams-agro",
-        "project_type": "PROFESSIONAL",
-        "summary": "Système d'information de production, de distribution et de suivi financier pour le secteur agro-alimentaire.",
-        "context": (
-            "Conception et déploiement d'une solution de gestion globale pour suivre les opérations terrain, "
-            "centraliser les flux transactionnels et piloter la performance financière d'une entreprise de distribution."
-        ),
-        "role": "Référent Technique / Développeur Backend & Data",
-        "problem": (
-            "Garantir la traçabilité complète des flux physiques (stocks, lots, ventes) et financiers complexes, "
-            "tout en automatisant le calcul des incentives terrain et de la paie à partir de données opérationnelles éparses."
-        ),
-        "solution": (
-            "Création d'une plateforme unifiée avec historisation fine et audit des opérations. "
-            "Développement d'un système d'archivage numérique des pièces justificatives, automatisation des reportings "
-            "financiers et conception de tableaux de bord d'aide à la décision pour la direction."
-        ),
-        "lessons_learned": (
-            "La rigueur dans l'historisation des données transactionnelles est non négociable pour le contrôle interne. "
-            "La modélisation orientée audit permet de détecter les anomalies opérationnelles de manière proactive "
-            "et simplifie grandement la maintenance corrective."
-        ),
-        "github_url": "",
-        "demo_url": "",
-        "featured": True,
-        "skills": ["Python", "Django", "PostgreSQL", "Metabase", "Modélisation dimensionnelle", "Docker & Docker Compose"],
+    "title": "DAMS — ERP Agroalimentaire & Plateforme Décisionnelle",
+    "slug": "dams-agro",
+    "project_type": "PROFESSIONAL",
+
+    "summary": (
+        "Plateforme métier développée pour DAMS dans le cadre des prestations "
+        "d'Antarès RH, permettant de piloter la production agricole, la distribution, "
+        "les opérations financières, la logistique et la performance commerciale "
+        "au sein d'un système d'information unifié."
+    ),
+
+    "context": (
+        "Dans le cadre des prestations assurées par Antarès RH pour DAMS, "
+        "j'interviens comme référent technique sur la conception, l'architecture "
+        "et le développement d'un système d'information couvrant l'ensemble "
+        "de la chaîne de valeur de l'entreprise. La plateforme intègre la gestion "
+        "des cultures, la distribution terrain, le suivi des ventes, la trésorerie, "
+        "les stocks, les ressources humaines, le calcul des incentives, la paie "
+        "et les outils de pilotage décisionnel."
+    ),
+
+    "role": "Référent Technique / Architecte Applicatif & Data",
+
+    "problem": (
+        "Centraliser les opérations agricoles, commerciales, logistiques et "
+        "financières dans une plateforme unique tout en garantissant la "
+        "traçabilité complète des flux physiques et monétaires. "
+        "Le système devait également fournir une vision consolidée permettant "
+        "à la direction de piloter l'activité et d'identifier rapidement les "
+        "anomalies opérationnelles ou financières."
+    ),
+
+    "solution": (
+        "Conception d'une architecture modulaire reposant sur Django, PostgreSQL "
+        "et Django REST Framework. Développement de modules dédiés à la gestion "
+        "des cultures, au suivi des rendements, à la distribution terrain, "
+        "aux ventes, aux stocks, à la trésorerie, à la paie, aux incentives, "
+        "à l'audit financier, aux rapports journaliers et à l'analyse "
+        "décisionnelle. Mise en œuvre d'API REST, de mécanismes "
+        "d'historisation, d'alertes métier, de surveillance des prix "
+        "et de tableaux de bord analytiques."
+    ),
+
+    "results": (
+        "Plateforme déployée en production et utilisée quotidiennement par "
+        "environ cinquante utilisateurs répartis entre direction, responsables "
+        "des opérations, superviseurs, gestionnaires de stock, agents terrain "
+        "et équipes commerciales. Le système permet le suivi des cultures, "
+        "des rendements agricoles, des ventes, des mouvements de stock, "
+        "des flux de trésorerie, de la paie et des incentives. "
+        "Les équipes de direction disposent d'une vision consolidée de "
+        "l'activité grâce aux tableaux de bord décisionnels, aux indicateurs "
+        "de performance et aux mécanismes de surveillance des marges et "
+        "des anomalies opérationnelles."
+    ),
+
+    "deep_dive": (
+        "L'architecture distingue plusieurs domaines métier spécialisés : "
+        "production agricole, distribution, finance, supervision, direction, "
+        "surveillance et reporting. Les workflows intègrent des mécanismes "
+        "de contrôle d'accès, d'historisation et d'audit permettant de "
+        "sécuriser les flux financiers et logistiques. Une application "
+        "analytique dédiée consomme les API REST du système principal afin "
+        "de fournir des analyses décisionnelles, des comparaisons temporelles, "
+        "des indicateurs de rendement agricole et des outils avancés de "
+        "pilotage opérationnel."
+    ),
+
+    "lessons_learned": (
+        "La traçabilité des flux métier doit être pensée dès la conception. "
+        "L'association d'une architecture modulaire, d'une historisation "
+        "systématique et d'une séparation claire entre opérations et analyse "
+        "facilite fortement l'audit, la maintenance et l'évolution du système."
+    ),
+
+    "github_url": "",
+    "demo_url": "",
+    "featured": True,
+    "start_date": "2024-10-06",
+
+    "skills": [
+        "Python",
+        "Django",
+        "Django REST Framework",
+        "PostgreSQL",
+        "Architecture Applicative",
+        "Conception d'API REST",
+        "Modélisation de Données",
+        "RBAC",
+        "Audit & Traçabilité",
+        "Business Intelligence",
+        "Metabase",
+        "Docker & Docker Compose"
+    ]
+
+
     },
 
     # =========================================================================
     # CATEGORIE 2 : CONSULTATIONS PONCTUELLES (INDÉPENDANT)
     # =========================================================================
     {
-        "title": "AMEE — Plateforme de Gestion de Réseau d'Experts",
-        "slug": "amee-network",
-        "project_type": "CONSULTING",
-        "summary": "Solution numérique de gestion des adhésions, qualification des consultants et pilotage de missions.",
-        "context": (
-            "Conception d'une plateforme sur mesure pour l'Association Malienne des Évaluations Environnementales "
-            "visant à structurer et administrer leur réseau d'experts nationaux et internationaux."
-        ),
-        "role": "Consultant Indépendant / Architecte & Développeur",
-        "problem": (
-            "Fluidifier et sécuriser le processus de validation et de qualification des consultants, "
-            "tout en intégrant un module de trésorerie autonome pour la gestion des adhésions et cotisations."
-        ),
-        "solution": (
-            "Développement de portails dédiés (membres, pourvoyeurs d'emploi) adossés à un backoffice centralisé. "
-            "Mise en place de workflows d'approbation des profils, d'un module de suivi de la qualité des livrables, "
-            "et intégration d'un CMS pour la gestion autonome des ressources documentaires."
-        ),
-        "lessons_learned": (
-            "En travaillant de manière autonome pour un client institutionnel, la formalisation rigoureuse des besoins "
-            "en amont est la clé du respect des délais. L'utilisation d'une architecture à base de rôles modulaires "
-            "a permis de livrer l'application de façon incrémentale sans interruption."
-        ),
-        "github_url": "",
-        "demo_url": "",
-        "featured": False,
-        "skills": ["Python", "Django", "PostgreSQL", "Conception et intégration d'API REST", "JavaScript"],
+    "title": "AMEE — Plateforme de Gestion du Réseau d'Experts",
+    "slug": "amee-network",
+    "project_type": "CONSULTING",
+
+
+    "summary": (
+        "Plateforme institutionnelle permettant la gestion des adhésions, "
+        "la qualification des experts, le pilotage du roster et la mise "
+        "en relation entre consultants et organisations."
+    ),
+
+    "context": (
+        "Conception d'une plateforme numérique pour l'Association Malienne "
+        "des Évaluations Environnementales (AMEE) afin de structurer son "
+        "réseau d'experts, moderniser ses processus d'adhésion et offrir "
+        "un espace centralisé de gestion des opportunités, des membres "
+        "et des contenus institutionnels."
+    ),
+
+    "role": "Consultant Indépendant / Architecte & Développeur",
+
+    "problem": (
+        "L'AMEE devait disposer d'un système capable de qualifier les experts, "
+        "de garantir la fiabilité des profils publiés, de gérer les adhésions "
+        "et cotisations, et de faciliter la mise en relation avec les "
+        "institutions, ONG et entreprises recherchant des compétences "
+        "en évaluation environnementale."
+    ),
+
+    "solution": (
+        "Conception d'une architecture modulaire reposant sur Django et "
+        "Django REST Framework. Développement d'un portail institutionnel, "
+        "d'un système de gestion des adhésions, d'un moteur de validation "
+        "du roster des consultants, d'un module de trésorerie, d'un espace "
+        "de publication d'opportunités et d'un dispositif de contrôle qualité "
+        "des prestations intégrant évaluations, signalements et mécanismes "
+        "de certification interne."
+    ),
+
+    "results": (
+        "Mise en place d'une plateforme unifiée regroupant le site "
+        "institutionnel de l'association, la gestion des membres, le roster "
+        "des experts et les services de mise en relation. Le système permet "
+        "de gérer l'ensemble du cycle d'adhésion, de qualification et de "
+        "suivi des consultants tout en assurant la traçabilité des "
+        "cotisations, des évaluations et des interactions avec les "
+        "organisations clientes."
+    ),
+
+    "deep_dive": (
+        "L'architecture s'appuie sur plusieurs domaines métier spécialisés : "
+        "adhésions, trésorerie, roster, missions, interactions, contrôle "
+        "qualité et CMS. Le moteur de qualification applique des règles "
+        "d'éligibilité basées sur les diplômes, l'expérience et la validation "
+        "par le conseil de l'association. Le système intègre également des "
+        "mécanismes de classement, de certification et de suivi de la qualité "
+        "des prestations afin de renforcer la confiance entre les experts "
+        "et les organisations utilisatrices."
+    ),
+
+    "lessons_learned": (
+        "La formalisation rigoureuse des besoins et des règles métier est "
+        "essentielle lorsqu'un système doit traduire des processus de "
+        "gouvernance institutionnelle. Une architecture modulaire permet "
+        "de faire évoluer progressivement les fonctionnalités tout en "
+        "préservant la cohérence du système."
+    ),
+
+    "github_url": "",
+    "demo_url": "https://amee-ml.com",
+    "featured": True,
+
+    "skills": [
+        "Python",
+        "Django",
+        "Django REST Framework",
+        "PostgreSQL",
+        "Conception et intégration d'API REST",
+        "Architecture Applicative",
+        "Modélisation de Données",
+        "RBAC",
+        "CMS",
+        "JavaScript"
+    ],
+
+
     },
+
     {
         "title": "EGM tech — Plateforme Commerciale B2B/B2C",
         "slug": "egm-tech",
@@ -175,6 +369,7 @@ PROJECTS = [
         "featured": False,
         "skills": ["Python", "Django", "MySQL", "JavaScript", "Conception et intégration d'API REST"],
     },
+   
     {
         "title": "Zabantu — Portail de Publication Scientifique",
         "slug": "zabantu-research",
@@ -234,6 +429,7 @@ PROJECTS = [
         "featured": True,
         "skills": ["SQL", "dbt Core", "Modélisation dimensionnelle", "Metabase", "PostgreSQL"],
     },
+   
     {
         "title": "Plateforme Big Data & Lakehouse E-commerce",
         "slug": "big-data-lakehouse",
@@ -263,8 +459,43 @@ PROJECTS = [
         "featured": True,
         "skills": ["Apache Kafka", "Apache Flink", "Apache Spark", "Dagster", "MinIO", "Docker & Docker Compose", "Metabase"],
     },
+
 ]
 
+PROFILE = {
+    "full_name": "Mahamane Daouda Maïga",
+    "title": "Architecte Applicatif & Data Engineer",
+    "bio": (
+        "Basé à Bamako (Mali), je conçois des systèmes d'information, "
+        "des plateformes métiers et des architectures data permettant "
+        "de transformer des besoins complexes en solutions fiables, "
+        "évolutives et orientées décision."
+    ),
+    "about": (
+        "Consultant BI et Data Engineer, je conçois et développe des "
+        "systèmes d'information couvrant aussi bien les plateformes "
+        "métiers que les architectures data. Mon expérience s'étend "
+        "de l'analyse des besoins à la conception fonctionnelle, la "
+        "modélisation des données, l'architecture applicative, le "
+        "développement backend et le déploiement de solutions en production.\n\n"
+
+        "J'interviens sur des projets variés : SIRH, ERP métier, "
+        "plateformes institutionnelles, pipelines Data Engineering et "
+        "outils décisionnels. Mon objectif est de construire des "
+        "solutions robustes, maintenables et alignées sur les besoins "
+        "opérationnels des organisations.\n\n"
+
+        "À long terme, je souhaite évoluer vers des fonctions "
+        "d'Architecte Data et Solution afin de concevoir des "
+        "écosystèmes techniques où architecture, gouvernance des "
+        "données et enjeux métier s'articulent de manière cohérente."
+    ),
+    "photo": "",
+    "email": "mdmaiga01@gmail.com",
+    "github_url": "https://github.com/dmaiga",
+    "linkedin_url": "https://www.linkedin.com/in/mdmaiga",
+    "cv": "",
+}
 
 class Command(BaseCommand):
     help = "Seed la base de données avec le CV et le parcours réel de M. Maïga"
@@ -284,82 +515,119 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options["reset"]:
             self.stdout.write("Nettoyage complet de la base de données...")
+    
             ProjectAsset.objects.all().delete()
             Project.objects.all().delete()
             Skill.objects.all().delete()
             Profile.objects.all().delete()
-            
+    
             media_root = Path(settings.MEDIA_ROOT)
-            for folder in ["profile", "cv", "projects", "assets"]:
+            for folder in ("profile", "cv", "projects", "assets"):
                 shutil.rmtree(media_root / folder, ignore_errors=True)
-            self.stdout.write(self.style.SUCCESS("Données nettoyées avec succès."))
-
-        # 1. Gestion du profil unique
-        if Profile.objects.exists():
-            self.stdout.write("Profil existant détecté. Mise à jour des informations...")
-            profile = Profile.objects.first()
-        else:
-            profile = Profile(full_name="Mahamane Daouda Maïga")
-
-        profile.title = "Architecte Applicatif & Data Engineer"
-        profile.bio = (
-            "Basé à Bamako, Mali, je conçois, développe et fais évoluer des systèmes d'information "
-            "et des plateformes métiers permettant de digitaliser les processus opérationnels, "
-            "structurer les données et améliorer le pilotage des activités. J'interviens sur l'ensemble "
-            "du cycle de vie des solutions, depuis l'analyse des besoins jusqu'au déploiement. "
-            "Mon expertise s'articule autour des architectures de données modernes (ELT, Big Data, Lakehouse) "
-            "et du développement applicatif backend robuste."
+    
+            self.stdout.write(
+                self.style.SUCCESS("Données nettoyées avec succès.")
+            )
+    
+        #
+        # ------------------------------------------------------------------
+        # Profil
+        # ------------------------------------------------------------------
+        #
+        profile, _ = Profile.objects.get_or_create(
+            full_name=PROFILE["full_name"]
         )
-        profile.email = "mdmaiga01@gmail.com"
-        profile.github_url = "https://github.com/dmaiga"
-        profile.linkedin_url = "https://www.linkedin.com/in/mdmaiga"
-        
-        # Attachement du fichier CV si fourni
+    
+        for field, value in PROFILE.items():
+            if field != "cv":
+                setattr(profile, field, value)
+    
         cv_path = options.get("cv")
         if cv_path:
             cv_file = Path(cv_path)
+    
             if cv_file.exists():
                 with open(cv_file, "rb") as f:
                     profile.cv.save(cv_file.name, File(f), save=False)
-                self.stdout.write(f"Fichier CV enregistré : {cv_path}")
+    
+                self.stdout.write(f"CV enregistré : {cv_path}")
             else:
-                self.stdout.write(self.style.WARNING(f"Fichier CV introuvable à l'adresse : {cv_path}"))
-
+                self.stdout.write(
+                    self.style.WARNING(f"CV introuvable : {cv_path}")
+                )
+    
         profile.save()
-        self.stdout.write(self.style.SUCCESS("Profil Mahamane Daouda Maïga synchronisé."))
-
-        # 2. Traitement des compétences
+    
+        self.stdout.write(
+            self.style.SUCCESS(f"Profil synchronisé : {profile.full_name}")
+        )
+    
+        #
+        # ------------------------------------------------------------------
+        # Compétences
+        # ------------------------------------------------------------------
+        #
         skill_map: dict[str, Skill] = {}
+    
         for name, category in SKILLS:
             skill, created = Skill.objects.get_or_create(
-                name=name, defaults={"category": category}
+                name=name,
+                defaults={"category": category},
             )
+    
+            if not created and skill.category != category:
+                skill.category = category
+                skill.save(update_fields=["category"])
+    
             skill_map[name] = skill
-
-        self.stdout.write(self.style.SUCCESS(f"Référentiel de {len(SKILLS)} compétences opérationnel."))
-
-        # 3. Traitement des Projets avec distinction des environnements
-        for data in PROJECTS:
-            skills_names = data.pop("skills")
-            
-            # Utilisation du slug comme clé unique naturelle pour éviter les doublons
-            project, created = Project.objects.get_or_create(
-                slug=data["slug"], defaults=data
+    
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Référentiel de {len(skill_map)} compétences synchronisé."
             )
-
-            if created:
-                for name in skills_names:
-                    if name in skill_map:
-                        project.skills.add(skill_map[name])
-                self.stdout.write(f"  [{project.project_type.upper()}] Projet créé : {project.title}")
-            else:
-                # Optionnel : Mettre à jour les champs si le projet existe déjà
-                for key, val in data.items():
-                    setattr(project, key, val)
+        )
+    
+        #
+        # ------------------------------------------------------------------
+        # Projets
+        # ------------------------------------------------------------------
+        #
+        for project_data in PROJECTS:
+        
+            skills = project_data["skills"]
+    
+            fields = {
+                k: v
+                for k, v in project_data.items()
+                if k != "skills"
+            }
+    
+            project, created = Project.objects.get_or_create(
+                slug=fields["slug"],
+                defaults=fields,
+            )
+    
+            if not created:
+                for field, value in fields.items():
+                    setattr(project, field, value)
+    
                 project.save()
-                self.stdout.write(f"  [{project.project_type.upper()}] Projet mis à jour : {project.title}")
-
-            # Restitution de la liste pour les itérations suivantes si nécessaire
-            data["skills"] = skills_names
-
-        self.stdout.write(self.style.SUCCESS("\n[OK] Base de données initialisée avec succès pour l'évaluation !"))
+    
+            project.skills.set(
+                [
+                    skill_map[name]
+                    for name in skills
+                    if name in skill_map
+                ]
+            )
+    
+            self.stdout.write(
+                f"  [{project.project_type}] "
+                f"{'Créé' if created else 'Mis à jour'} : {project.title}"
+            )
+    
+        self.stdout.write(
+            self.style.SUCCESS(
+                "\n✔ Base de données synchronisée avec succès."
+            )
+        )
