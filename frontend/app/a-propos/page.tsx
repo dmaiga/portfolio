@@ -1,22 +1,23 @@
 import type { Metadata } from "next"
-import type { Profile } from "@/lib/types"
+import type { Profile, Skill, ProjectSummary } from "@/lib/types"
+import { PROJECT_TYPE_LABELS } from "@/lib/types"
 import Image from "next/image"
-import { FileText, ExternalLink, ArrowRight } from "lucide-react"
-import { DOMAINS } from "@/lib/domains"
+import { FileText, ExternalLink, ArrowRight, Download } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Markdown } from "@/components/markdown"
 import { mediaUrl } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "À propos",
   description:
-    "Parcours, positionnement, domaines d'intervention et démarche de travail de Mahamane Daouda Maiga.",
+    "Qui je suis, ma démarche de travail, mes compétences et mon parcours — Mahamane Daouda Maiga.",
 }
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
-// Renseigner NEXT_PUBLIC_REPO_URL une fois le dépôt poussé sur GitHub
-// (ex. https://github.com/dmaiga/portfolio). Tant qu'il est vide, les
-// artefacts s'affichent en libellés simples — jamais de lien mort.
+// Renseigner NEXT_PUBLIC_REPO_URL une fois le dépôt poussé sur GitHub.
+// Tant qu'il est vide, les artefacts s'affichent en libellés simples — jamais de lien mort.
 const REPO_URL = process.env.NEXT_PUBLIC_REPO_URL ?? ""
 
 function repoLink(path: string, isDir = false): string | null {
@@ -26,7 +27,6 @@ function repoLink(path: string, isDir = false): string | null {
 
 type Artifact = { label: string; path: string; isDir?: boolean }
 
-// Les étapes de la démarche projet, chacune adossée à son artefact
 const DEMARCHE: Artifact[] = [
   { label: "Vision", path: "docs/00-vision.md" },
   { label: "Analyse", path: "docs/01-stakeholders.md" },
@@ -83,128 +83,212 @@ function ArtifactList({ items }: { items: Artifact[] }) {
   )
 }
 
+async function getJson<T>(path: string, fallback: T): Promise<T> {
+  try {
+    const res = await fetch(`${API}${path}`, { next: { revalidate: 3600 } })
+    if (!res.ok) return fallback
+    return res.json()
+  } catch {
+    return fallback
+  }
+}
+
 export default async function AProposPage() {
-  const res = await fetch(`${API}/api/profile/`, { next: { revalidate: 3600 } })
-  if (!res.ok) throw new Error("Impossible de charger le profil")
-  const profile: Profile = await res.json()
+  const profileRes = await fetch(`${API}/api/profile/`, { next: { revalidate: 3600 } })
+  if (!profileRes.ok) throw new Error("Impossible de charger le profil")
+  const profile: Profile = await profileRes.json()
+
+  const [skills, projects] = await Promise.all([
+    getJson<Skill[]>("/api/skills/", []),
+    getJson<ProjectSummary[]>("/api/projects/", []),
+  ])
+
+  const skillsByCategory = skills.reduce<Record<string, Skill[]>>((acc, skill) => {
+    ;(acc[skill.category] ??= []).push(skill)
+    return acc
+  }, {})
+
+  // Parcours dérivé des projets datés (ordre API = -start_date).
+  const parcours = projects.filter((p) => p.start_date)
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12 space-y-10 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
+    <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="grid md:grid-cols-3 gap-10 md:gap-12 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
 
-      {/* En-tête : positionnement */}
-      <div className="flex flex-col sm:flex-row gap-8 items-start">
-        {profile.photo && (
-          <Image
-            src={mediaUrl(profile.photo, API)}
-            alt={profile.full_name}
-            width={120}
-            height={120}
-            className="rounded-2xl object-cover shrink-0 ring-2 ring-primary/20 shadow-sm"
-          />
-        )}
-        <div className="space-y-1">
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">{profile.full_name}</h1>
-          <p className="text-lg text-muted-foreground">{profile.title}</p>
-        </div>
-      </div>
-
-      {/* Parcours détaillé */}
-      {profile.about && (
-        <section className="space-y-3">
-          <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Parcours
-          </h2>
-          <Markdown className="text-sm text-muted-foreground">{profile.about}</Markdown>
-        </section>
-      )}
-
-      {/* Domaines d'intervention */}
-      <section className="space-y-3">
-        <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-          Domaines d&apos;intervention
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {DOMAINS.map(({ icon: Icon, label }) => (
-            <div
-              key={label}
-              className="flex items-center gap-2.5 rounded-lg border px-4 py-3 bg-muted/40"
-            >
-              <Icon className="size-4 text-primary shrink-0" />
-              <span className="text-xs font-medium leading-tight">{label}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Démarche (ex-page Méthode) : comment ce portfolio et les projets ont été conçus */}
-      <div className="space-y-6 border-t pt-10">
-        <div className="space-y-2">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight">Démarche</h2>
-          <p className="text-sm sm:text-base text-muted-foreground">
-            Comment ce portfolio et les projets présentés ont-ils été conçus et réalisés ? Cette
-            section rend la démarche visible — pas seulement le résultat final.
-          </p>
-        </div>
-
-        {/* La démarche projet */}
-        <section className="space-y-4">
-          <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            La démarche projet
-          </h3>
-          <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
-            {DEMARCHE.map((step, i) => {
-              const href = repoLink(step.path, step.isDir)
-              return (
-                <span key={step.path} className="inline-flex items-center gap-1.5">
-                  {href ? (
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-md border px-2.5 py-1 text-sm hover:bg-accent/40 transition-colors duration-200"
-                    >
-                      {step.label}
-                    </a>
-                  ) : (
-                    <span className="rounded-md border px-2.5 py-1 text-sm bg-muted/40">
-                      {step.label}
-                    </span>
-                  )}
-                  {i < DEMARCHE.length - 1 && (
-                    <ArrowRight className="size-3.5 text-muted-foreground shrink-0" />
-                  )}
-                </span>
-              )
-            })}
+        {/* ── Colonne gauche : identité (sticky) ───────────────────── */}
+        <aside className="md:col-span-1 space-y-6 md:sticky md:top-20 md:self-start">
+          {profile.photo && (
+            <Image
+              src={mediaUrl(profile.photo, API)}
+              alt={profile.full_name}
+              width={112}
+              height={112}
+              className="rounded-2xl object-cover ring-2 ring-brand/20 shadow-sm"
+            />
+          )}
+          <div className="space-y-1">
+            <h1 className="text-2xl font-bold tracking-tight">{profile.full_name}</h1>
+            <p className="text-muted-foreground">{profile.title}</p>
           </div>
-        </section>
 
-        {/* Conventions */}
-        <section className="space-y-3">
-          <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Conventions
-          </h3>
-          <ArtifactList items={CONVENTIONS} />
-        </section>
+          <div className="flex flex-wrap gap-2 border-t pt-6">
+            {profile.github_url && (
+              <a href={profile.github_url} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" size="sm">
+                  <ExternalLink className="size-3.5 mr-1.5" />
+                  GitHub
+                </Button>
+              </a>
+            )}
+            {profile.linkedin_url && (
+              <a href={profile.linkedin_url} target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" size="sm">
+                  <ExternalLink className="size-3.5 mr-1.5" />
+                  LinkedIn
+                </Button>
+              </a>
+            )}
+          </div>
 
-        {/* Artefacts */}
-        <section className="space-y-3">
-          <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Artefacts
-          </h3>
-          <ArtifactList items={ARTEFACTS} />
-        </section>
+          {profile.cv && (
+            <a href={mediaUrl(profile.cv, API)} target="_blank" rel="noopener noreferrer">
+              <Button variant="ghost" size="sm" className="w-full justify-start">
+                <Download className="size-3.5 mr-1.5" />
+                Télécharger le CV
+              </Button>
+            </a>
+          )}
+        </aside>
 
-        {/* Rôle des agents IA */}
-        <section className="space-y-3 border-l-2 border-primary/30 pl-4">
-          <h3 className="text-base font-semibold">Le rôle des agents IA</h3>
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            Les agents IA sont utilisés comme outils de production, de revue et de réflexion. Ils
-            participent à la génération de contenu technique mais ne remplacent ni les décisions
-            produit, ni les choix d&apos;architecture, ni la validation finale. L&apos;objectif est de
-            montrer leur usage concret dans le processus de travail, pas de proclamer leur présence.
-          </p>
-        </section>
+        {/* ── Colonne droite : contenu ─────────────────────────────── */}
+        <div className="md:col-span-2 space-y-12">
+
+          {/* Qui suis-je */}
+          {profile.about && (
+            <section className="space-y-3">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Qui suis-je
+              </h2>
+              <Markdown className="text-sm text-muted-foreground">{profile.about}</Markdown>
+            </section>
+          )}
+
+          {/* Ma démarche */}
+          <section className="space-y-6">
+            <div className="space-y-2">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Ma démarche
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Owner avant Dev : intentions, décisions et specs versionnées dans le dépôt avant la
+                moindre ligne de code. Chaque étape laisse une trace publique.
+              </p>
+            </div>
+
+            {/* La démarche projet */}
+            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
+              {DEMARCHE.map((step, i) => {
+                const href = repoLink(step.path, step.isDir)
+                return (
+                  <span key={step.path} className="inline-flex items-center gap-1.5">
+                    {href ? (
+                      <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-md border border-border px-2.5 py-1 text-sm hover:bg-muted transition-colors duration-200"
+                      >
+                        {step.label}
+                      </a>
+                    ) : (
+                      <span className="rounded-md border border-border px-2.5 py-1 text-sm bg-muted/40">
+                        {step.label}
+                      </span>
+                    )}
+                    {i < DEMARCHE.length - 1 && (
+                      <ArrowRight className="size-3.5 text-muted-foreground shrink-0" />
+                    )}
+                  </span>
+                )
+              })}
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6">
+              <div className="space-y-3">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  Conventions
+                </h3>
+                <ArtifactList items={CONVENTIONS} />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                  Artefacts
+                </h3>
+                <ArtifactList items={ARTEFACTS} />
+              </div>
+            </div>
+
+            <div className="space-y-2 border-l-2 border-brand/30 pl-4">
+              <h3 className="text-base font-semibold">Le rôle des agents IA</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Les agents IA sont utilisés comme outils de production, de revue et de réflexion. Ils
+                participent à la génération de contenu technique mais ne remplacent ni les décisions
+                produit, ni les choix d&apos;architecture, ni la validation finale. L&apos;objectif est
+                de montrer leur usage concret dans le processus de travail, pas de proclamer leur
+                présence.
+              </p>
+            </div>
+          </section>
+
+          {/* Compétences */}
+          {skills.length > 0 && (
+            <section className="space-y-4">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Compétences
+              </h2>
+              <div className="space-y-4">
+                {Object.entries(skillsByCategory).map(([category, items]) => (
+                  <div key={category} className="space-y-2">
+                    <p className="text-sm font-medium">{category}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {items.map((skill) => (
+                        <Badge key={skill.id} variant="secondary">
+                          {skill.name}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Parcours */}
+          {parcours.length > 0 && (
+            <section className="space-y-4">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                Parcours
+              </h2>
+              <ul className="space-y-4">
+                {parcours.map((p) => (
+                  <li key={p.id} className="flex gap-4">
+                    <span className="w-12 shrink-0 text-sm text-muted-foreground pt-0.5">
+                      {p.start_date ? new Date(p.start_date).getFullYear() : ""}
+                    </span>
+                    <div className="space-y-0.5">
+                      <p className="text-sm font-medium">{p.title}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {p.role}
+                        {p.role && " · "}
+                        {PROJECT_TYPE_LABELS[p.project_type]}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+        </div>
       </div>
     </div>
   )
