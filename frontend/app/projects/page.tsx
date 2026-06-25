@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import type { ProjectSummary } from "@/lib/types"
-import { PROJECT_CATEGORY_ORDER } from "@/lib/types"
-import { ProjectCard } from "@/components/project-card"
+import { ProjectsBrowser } from "@/components/projects-browser"
 
 export const metadata: Metadata = {
   title: "Réalisations",
@@ -38,24 +37,7 @@ export default async function ProjectsPage() {
       {projects.length === 0 ? (
         <p className="text-muted-foreground">Aucune réalisation pour le moment.</p>
       ) : (
-        <div className="space-y-12">
-          {PROJECT_CATEGORY_ORDER.map(({ type, title }) => {
-            const items = projects.filter((p) => p.project_type === type)
-            if (items.length === 0) return null
-            return (
-              <section key={type} className="space-y-4">
-                <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                  {title}
-                </h2>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {items.map((project, i) => (
-                    <ProjectCard key={project.id} project={project} index={i} />
-                  ))}
-                </div>
-              </section>
-            )
-          })}
-        </div>
+        <ProjectsBrowser projects={projects} />
       )}
     </div>
   )
