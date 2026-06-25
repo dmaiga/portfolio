@@ -56,6 +56,7 @@ class ProjectsApiTests(TestCase):
         item = data[0]
         self.assertEqual(item["slug"], "big-data")
         self.assertEqual(item["summary"], "résumé")
+        self.assertEqual(item["role"], "Lead")
         self.assertEqual(item["project_type"], "PROFESSIONAL")
         self.assertEqual(len(item["skills"]), 1)
         # results n'appartient qu'au détail, pas à la liste
