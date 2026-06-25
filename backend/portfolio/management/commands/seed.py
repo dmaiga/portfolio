@@ -58,14 +58,14 @@ PROJECTS = [
         "title": "Antarès RH — Plateforme RH Intégrée",
         "slug": "antares-rh",
         "project_type": "PROFESSIONAL",  # Distinction claire du type
-        "short_description": "Système d'information RH intégré couvrant la gestion des talents, des candidats et l'archivage numérique.",
-        "description": (
+        "summary": "Système d'information RH intégré couvrant la gestion des talents, des candidats et l'archivage numérique.",
+        "context": (
             "Développement et architecture de la plateforme Antarès RH. Intervention sur l'ensemble "
             "du cycle de vie du système, depuis l'analyse fonctionnelle des parcours utilisateurs "
             "jusqu'au déploiement de modules de gestion des candidats, des offres d'emploi et d'un CMS multilingue."
         ),
         "role": "Assistant Data et Informatique (Référent Technique)",
-        "challenge": (
+        "problem": (
             "L'enjeu consistait à concevoir un système modulaire capable de centraliser la gestion documentaire "
             "et le cycle de vie des talents, tout en garantissant des mécanismes stricts de sécurité, "
             "de contrôle d'accès et de traçabilité des dossiers candidats."
@@ -89,13 +89,13 @@ PROJECTS = [
         "title": "DAMS — Plateforme Opérationnelle et Décisionnelle",
         "slug": "dams-agro",
         "project_type": "PROFESSIONAL",
-        "short_description": "Système d'information de production, de distribution et de suivi financier pour le secteur agro-alimentaire.",
-        "description": (
+        "summary": "Système d'information de production, de distribution et de suivi financier pour le secteur agro-alimentaire.",
+        "context": (
             "Conception et déploiement d'une solution de gestion globale pour suivre les opérations terrain, "
             "centraliser les flux transactionnels et piloter la performance financière d'une entreprise de distribution."
         ),
         "role": "Référent Technique / Développeur Backend & Data",
-        "challenge": (
+        "problem": (
             "Garantir la traçabilité complète des flux physiques (stocks, lots, ventes) et financiers complexes, "
             "tout en automatisant le calcul des incentives terrain et de la paie à partir de données opérationnelles éparses."
         ),
@@ -122,13 +122,13 @@ PROJECTS = [
         "title": "AMEE — Plateforme de Gestion de Réseau d'Experts",
         "slug": "amee-network",
         "project_type": "CONSULTING",
-        "short_description": "Solution numérique de gestion des adhésions, qualification des consultants et pilotage de missions.",
-        "description": (
+        "summary": "Solution numérique de gestion des adhésions, qualification des consultants et pilotage de missions.",
+        "context": (
             "Conception d'une plateforme sur mesure pour l'Association Malienne des Évaluations Environnementales "
             "visant à structurer et administrer leur réseau d'experts nationaux et internationaux."
         ),
         "role": "Consultant Indépendant / Architecte & Développeur",
-        "challenge": (
+        "problem": (
             "Fluidifier et sécuriser le processus de validation et de qualification des consultants, "
             "tout en intégrant un module de trésorerie autonome pour la gestion des adhésions et cotisations."
         ),
@@ -151,13 +151,13 @@ PROJECTS = [
         "title": "EGM tech — Plateforme Commerciale B2B/B2C",
         "slug": "egm-tech",
         "project_type": "CONSULTING",
-        "short_description": "Plateforme e-commerce technique avec système de demandes de devis et gestion du cycle commercial.",
-        "description": (
+        "summary": "Plateforme e-commerce technique avec système de demandes de devis et gestion du cycle commercial.",
+        "context": (
             "Déploiement d'une solution commerciale complète pour la présentation de solutions techniques, "
             "la passation de commandes en ligne et la qualification des opportunités d'affaires."
         ),
         "role": "Consultant Indépendant / Développeur Full-Stack",
-        "challenge": (
+        "problem": (
             "Modéliser un catalogue de produits techniques complexes tout en proposant un double parcours utilisateur : "
             "achat direct (B2C) et demande de devis sur mesure avec tarification dynamique (B2B)."
         ),
@@ -179,13 +179,13 @@ PROJECTS = [
         "title": "Zabantu — Portail de Publication Scientifique",
         "slug": "zabantu-research",
         "project_type": "CONSULTING",
-        "short_description": "Plateforme collaborative d'archivage, de valorisation et de diffusion de contenus académiques.",
-        "description": (
+        "summary": "Plateforme collaborative d'archivage, de valorisation et de diffusion de contenus académiques.",
+        "context": (
             "Conception et déploiement du portail web institutionnel du Groupe de Recherche Zabantu "
             "dédié à la promotion et au partage des connaissances scientifiques."
         ),
         "role": "Consultant Indépendant / Développeur Backend",
-        "challenge": (
+        "problem": (
             "Organiser et structurer la taxonomie de contenus académiques variés (articles, analyses, événements) "
             "avec des règles d'administration strictes selon le statut des chercheurs."
         ),
@@ -210,13 +210,13 @@ PROJECTS = [
         "title": "Projet d'Entreprise BI — AES Global Tech Market",
         "slug": "bi-aes-global",
         "project_type": "ACADEMIC",
-        "short_description": "Conception d'un Data Warehouse multidimensionnel et de pipelines ELT pour le pilotage commercial et financier.",
-        "description": (
+        "summary": "Conception d'un Data Warehouse multidimensionnel et de pipelines ELT pour le pilotage commercial et financier.",
+        "context": (
             "Mise en place d'une plateforme décisionnelle centralisant les données de l'application 'Tassouma' "
             "pour une entreprise technologique opérant en Afrique de l'Ouest."
         ),
         "role": "Data Engineer / Architecte BI (Master 2)",
-        "challenge": (
+        "problem": (
             "Standardiser les KPI métiers et consolider des volumes hétérogènes au sein d'une architecture "
             "analytique multicouche fiable, dotée d'une stratégie de tolérance aux pannes (Fail-Safe)."
         ),
@@ -238,13 +238,13 @@ PROJECTS = [
         "title": "Plateforme Big Data & Lakehouse E-commerce",
         "slug": "big-data-lakehouse",
         "project_type": "ACADEMIC",
-        "short_description": "Pipeline d'ingestion et de traitement distribué de flux streaming multi-sources (Kafka, Flink, Spark).",
-        "description": (
+        "summary": "Pipeline d'ingestion et de traitement distribué de flux streaming multi-sources (Kafka, Flink, Spark).",
+        "context": (
             "Conception d'une architecture Lakehouse moderne intégrant l'ingestion temps réel, l'orchestration, "
             "ainsi que l'observabilité de la plateforme informatique."
         ),
         "role": "Architecte Big Data (Master 2)",
-        "challenge": (
+        "problem": (
             "Traiter simultanément des flux de navigation web, des transactions et des mouvements de stock continus "
             "en combinant une logique de streaming et de batch (Architecture Lambda)."
         ),
