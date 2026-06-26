@@ -394,7 +394,7 @@ PROJECTS = [
         ),
         "github_url": "",
         "demo_url": "",
-        "featured": False,
+        "featured": True,
         "skills": ["Python", "Django", "MySQL", "JavaScript"],
     },
 
