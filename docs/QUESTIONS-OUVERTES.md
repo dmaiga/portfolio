@@ -2,3 +2,4 @@ idee pour la v2 ajouter un status a venir pour les projets sur les quels je trav
 
 introduction de lespet certification
 introduction a blogs et post juste des articles(idee,travaux,revue and so on) avec des liens extern vers pas forcement mes propres travaux je pourrais commente 
+inclure gitlab 
