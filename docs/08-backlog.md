@@ -4,20 +4,18 @@ Dérivé de `00`→`05`. Chaque critère est la **Definition of Done** de l'item
 
 ---
 
-## US1 — Page Méthode *(objectif n°1, prioritaire)*
+## US1 — Démarche visible dans À propos *(objectif n°1, prioritaire)*
 *En tant que pair ou recruteur, je veux comprendre comment ce portfolio et les projets ont été conçus, afin de juger la démarche et pas seulement le résultat.*
-- [ ] Accessible depuis la **nav principale** (pas en pied de page).
-- [ ] Approche **hybride** : explication courte de la démarche + accès direct aux artefacts (ni index brut, ni long récit).
-- [ ] Présente la démarche projet : Vision → Analyse → Objectifs → Personas → Architecture → Backlog → Sprints → Livraison.
-- [ ] Liens vers les conventions (`rules/ABOUT-ME.md`, `GIT.md`, `STACK.md`) et artefacts (`architecture.md`, `CLAUDE.md`, `docs/sprints/`, ADR, backlog) — sur GitHub.
-- [ ] Le rôle des agents IA est **montré dans le processus**, jamais réduit à un slogan.
+- [x] Intégrée à la page **À propos** (pas une page « Méthode » dédiée — fusion actée au sprint model-ui, M2).
+- [x] Présentation **narrative courte** de la méthode (Owner avant Dev), sans liste de liens vers les fichiers du dépôt ni bloc dédié aux agents IA (cf. `docs/DECISIONS.md`, ADR-010 : ce niveau de détail sur la page publique risquait d'être mal interprété).
+- [ ] Le code source et les artefacts de conception (`rules/`, `docs/`, ADR, sprints) restent consultables sur GitHub pour qui veut creuser, sans être mis en avant sur la page.
 
 ## US2 — Page projet autonome
 *En tant que visiteur arrivant via GitHub/LinkedIn/CV/partage, je veux comprendre un projet sans passer par l'accueil.*
 - [ ] La page se lit seule (contexte, problème, solution, résultats présents).
 - [ ] Tronc commun ordonné : `Résumé → Contexte → Problème → Solution → Résultats → Technologies → Approfondir`.
 - [ ] Compréhensible **sans explication orale** (objectif 2 ; validation par retours de vive voix).
-- [ ] **Aide-mémoire (objectif 3)** : le quoi/pourquoi est lisible immédiatement via les docs liés, sans recherche externe — je retrouve le contexte en **< 30 s**.
+- [ ] **Aide-mémoire (objectif 3)** : le quoi/pourquoi est lisible immédiatement via les docs liés, sans recherche externe — contexte retrouvable en **< 30 s**.
 
 ## US3 — Bifurcation « Approfondir »
 *En tant que recruteur, je veux pouvoir m'arrêter tôt ; en tant que pair, pouvoir continuer à creuser.*
@@ -41,7 +39,7 @@ Dérivé de `00`→`05`. Chaque critère est la **Definition of Done** de l'item
 ## US6 — Accueil orienteur
 *En tant que visiteur, je veux saisir vite qui tu es et pourquoi consulter tes réalisations.*
 - [ ] Répond en un écran à : qui je suis, ce que je fais, pourquoi consulter mes réalisations.
-- [ ] Mène vers Réalisations et Méthode.
+- [ ] Mène vers Réalisations et À propos.
 
 ## US7 — À propos & Contact
 *En tant que recruteur/prospect, je veux le profil détaillé et de quoi te joindre.*

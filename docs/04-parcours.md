@@ -1,6 +1,6 @@
 # 04 — Parcours
 
-Cibles, par priorité : **moi > pairs > recruteurs / prospects**.
+Audience prioritaire : **l'auteur et ses pairs** ; recruteurs et prospects en cibles secondaires (cf. `00-vision.md`).
 
 ## Entrées
 - **Accueil** = découvrir le portfolio (entrée principale, lien envoyé / promo).

@@ -66,3 +66,5 @@ Ces points, identifiés par les analyses `input/`, **ne sont pas** dans le backl
 | M5 | Seed — repeupler avec les nouveaux noms de champs + contenu réel | ❌ | Après M1 · owner |
 
 > **Note M1 :** "relabel Contexte" dans l'entrée US2 ci-dessus était un relabel d'affichage front (label `description` → `Contexte`), pas un rename DB. Le rename DB reste à faire dans M1.
+
+> **Mise à jour (2026-07-19).** M1→M5 sont désormais **tous terminés** — voir la Definition of Done de `docs/sprints/sprint-model-ui.md` (Phase 1 et 2, entièrement cochées). Ce tableau reste tel quel comme trace de l'audit initial ; il n'est plus le statut courant. `/methode` (US1, M2) est bien supprimée : la démarche vit dans `/a-propos`, elle-même simplifiée depuis (retrait des liens vers les docs internes et du bloc agents IA — cf. `docs/DECISIONS.md` ADR-010).

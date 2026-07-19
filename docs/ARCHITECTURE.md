@@ -188,7 +188,7 @@ Retourne le profil principal.
 ```json
 {
   "full_name": "Mahamane Daouda Maiga",
-  "title": "Assistant Data & Informatique",
+  "title": "Systèmes d'Information | Data | Automatisation",
   "bio": "...",
   "github_url": "...",
   "linkedin_url": "..."
@@ -225,8 +225,8 @@ Retourne la liste des projets.
 [
   {
     "id": 1,
-    "title": "DAMS",
-    "slug": "dams",
+    "title": "Antarès RH — SIRH Modulaire & Plateforme de Gestion des Talents",
+    "slug": "antares-rh",
     "summary": "...",
     "role": "...",
     "featured": true,
@@ -252,8 +252,8 @@ Retourne le détail d'un projet.
 ```json
 {
   "id": 1,
-  "title": "DAMS",
-  "slug": "dams",
+  "title": "Antarès RH — SIRH Modulaire & Plateforme de Gestion des Talents",
+  "slug": "antares-rh",
   "summary": "...",
   "context": "...",
   "role": "...",

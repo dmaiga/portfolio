@@ -24,10 +24,8 @@ L'architecture fonctionnelle du site se résume à cette arborescence (site en l
 
 Répond à : *« comment ce portfolio et les projets ont-ils été conçus et réalisés ? »*.
 
-- **La démarche projet** : Vision → Analyse → Objectifs → Personas → Architecture → Backlog → Sprints → Livraison.
-- **Les conventions** : `rules/ABOUT-ME.md`, `rules/GIT.md`, `rules/STACK.md`.
-- **Les artefacts** : `architecture.md`, `CLAUDE.md`, `docs/sprints/`, décisions d'architecture, backlog (liens GitHub).
-- **Le rôle des agents IA** : outils de production, de revue et de réflexion — ils génèrent du contenu technique mais ne remplacent ni les décisions produit, ni les choix d'architecture, ni la validation finale. **Montré dans le processus, pas proclamé.**
+- **Présentation narrative courte** de la méthode (Owner avant Dev : cadrage avant code, décisions tracées) — texte seul, sans liste de liens vers les fichiers du dépôt.
+- **Décision (2026-07-19, cf. `docs/DECISIONS.md` ADR-010) :** la version précédente exposait une liste de liens vers `rules/ABOUT-ME.md`, `docs/sprints/`, `DECISIONS.md`, etc., ainsi qu'un bloc dédié au rôle des agents IA. Retirés : risque de mauvaise interprétation par un visiteur sans contexte sur la page la plus centrale du site. Le code et les artefacts de conception (`rules/`, `docs/`, ADR, sprints) restent consultables sur GitHub pour qui veut creuser, sans être mis en avant sur la page.
 
 ## Pages volontairement exclues
 
