@@ -133,7 +133,7 @@ export default async function ProjectDetailPage({
         ← Toutes les réalisations
       </Link>
 
-      <div className="mt-8 grid lg:grid-cols-4 gap-8 lg:gap-10">
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-10">
         {/* ── Colonne gauche : ancre sticky ──────────────────────── */}
         <aside className="hidden lg:block lg:col-span-1 lg:sticky lg:top-20 lg:self-start space-y-6">
           <nav>
@@ -156,7 +156,7 @@ export default async function ProjectDetailPage({
         </aside>
 
         {/* ── Colonne droite : contenu ───────────────────────────── */}
-        <article className="lg:col-span-3 space-y-10 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
+        <article className="min-w-0 lg:col-span-3 space-y-10 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
 
           {/* En-tête */}
           <div className="space-y-3">
@@ -189,7 +189,7 @@ export default async function ProjectDetailPage({
               <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Résumé
               </h2>
-              <p className="text-base text-muted-foreground">{project.summary}</p>
+              <p className="max-w-prose text-base text-muted-foreground">{project.summary}</p>
             </section>
           )}
 
@@ -212,7 +212,7 @@ export default async function ProjectDetailPage({
               <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Contexte
               </h2>
-              <Markdown className="text-sm">{project.context}</Markdown>
+              <Markdown className="max-w-prose text-sm">{project.context}</Markdown>
             </section>
           )}
 
@@ -220,7 +220,7 @@ export default async function ProjectDetailPage({
           {project.problem && (
             <section id="probleme" className="scroll-mt-24 space-y-3 border-l-2 border-brand/30 pl-4">
               <h2 className="text-base font-semibold">Problème à résoudre</h2>
-              <Markdown className="text-sm text-muted-foreground">{project.problem}</Markdown>
+              <Markdown className="max-w-prose text-sm text-muted-foreground">{project.problem}</Markdown>
             </section>
           )}
 
@@ -228,7 +228,7 @@ export default async function ProjectDetailPage({
           {project.solution && (
             <section id="solution" className="scroll-mt-24 space-y-3 border-l-2 border-brand/30 pl-4">
               <h2 className="text-base font-semibold">Approche et solution</h2>
-              <Markdown className="text-sm text-muted-foreground">{project.solution}</Markdown>
+              <Markdown className="max-w-prose text-sm text-muted-foreground">{project.solution}</Markdown>
             </section>
           )}
 
@@ -236,7 +236,7 @@ export default async function ProjectDetailPage({
           {project.results && (
             <section id="resultats" className="scroll-mt-24 space-y-3 border-l-2 border-brand/30 pl-4">
               <h2 className="text-base font-semibold">Résultats</h2>
-              <Markdown className="text-sm text-muted-foreground">{project.results}</Markdown>
+              <Markdown className="max-w-prose text-sm text-muted-foreground">{project.results}</Markdown>
             </section>
           )}
 
@@ -276,7 +276,7 @@ export default async function ProjectDetailPage({
           {project.deep_dive && (
             <section className="space-y-3 border-l-2 border-brand/30 pl-4">
               <h2 className="text-base font-semibold">Approfondissement</h2>
-              <Markdown className="text-sm text-muted-foreground">{project.deep_dive}</Markdown>
+              <Markdown className="max-w-prose text-sm text-muted-foreground">{project.deep_dive}</Markdown>
             </section>
           )}
 
@@ -346,7 +346,7 @@ export default async function ProjectDetailPage({
           {project.lessons_learned && (
             <section className="space-y-3 border-l-2 border-brand/30 pl-4">
               <h2 className="text-base font-semibold">Retour d&apos;expérience</h2>
-              <Markdown className="text-sm text-muted-foreground">{project.lessons_learned}</Markdown>
+              <Markdown className="max-w-prose text-sm text-muted-foreground">{project.lessons_learned}</Markdown>
             </section>
           )}
 
