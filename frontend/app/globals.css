@@ -70,11 +70,11 @@
   /* ── Tokens sémantiques — Light mode ──
      Palette : 80 % neutres cool-gray · 15 % bleu profond · 5 % cyan.
      Contraste texte/fond ≥ WCAG AA. */
-  --bg: oklch(0.985 0.002 255);          /* fond de page, gris très clair */
-  --surface: oklch(1 0 0);               /* cartes, sections (blanc surélevé) */
-  --edge: oklch(0.915 0.004 255);        /* bordures, séparateurs */
-  --text: oklch(0.21 0.012 260);         /* corps de texte, quasi-noir */
-  --text-muted: oklch(0.46 0.012 260);   /* texte secondaire (AA sur --bg) */
+  --bg: oklch(0.965 0.003 255);          /* fond de page, gris doux (pas blanc pur) */
+  --surface: oklch(0.99 0.003 255);      /* cartes, sections (quasi-blanc, jamais #fff pur) */
+  --edge: oklch(0.90 0.005 255);         /* bordures, séparateurs */
+  --text: oklch(0.23 0.012 260);         /* corps de texte, gris très foncé (pas noir pur) */
+  --text-muted: oklch(0.45 0.012 260);   /* texte secondaire (AA sur --bg) */
   --brand: oklch(0.48 0.16 258);         /* bleu profond */
   --brand-foreground: oklch(0.985 0.005 255);
   --cyan: oklch(0.68 0.12 205);          /* accent cyan discret */
@@ -88,11 +88,11 @@
   --popover-foreground: var(--text);
   --primary: var(--brand);
   --primary-foreground: var(--brand-foreground);
-  --secondary: oklch(0.965 0.003 255);
+  --secondary: oklch(0.945 0.004 255);
   --secondary-foreground: var(--text);
-  --muted: oklch(0.965 0.003 255);
+  --muted: oklch(0.945 0.004 255);
   --muted-foreground: var(--text-muted);
-  --accent: oklch(0.95 0.025 205);       /* teinte de survol, cyan très dilué */
+  --accent: oklch(0.93 0.028 205);       /* teinte de survol, cyan très dilué */
   --accent-foreground: var(--brand);
   --destructive: oklch(0.577 0.245 27.325);
   --border: var(--edge);
