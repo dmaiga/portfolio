@@ -2,12 +2,23 @@ import type { Metadata } from "next"
 import type { Profile, Skill, ProjectSummary } from "@/lib/types"
 import { PROJECT_TYPE_LABELS } from "@/lib/types"
 import Image from "next/image"
-import { FileText, ExternalLink, ArrowRight, Download } from "lucide-react"
+import {
+  ExternalLink,
+  Download,
+  Database,
+  Network,
+  BarChart3,
+  Code2,
+  HardDrive,
+  Cloud,
+  Layers,
+} from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Markdown } from "@/components/markdown"
 import { mediaUrl } from "@/lib/utils"
 import { REVALIDATE } from "@/lib/config"
+import { fetchGithubStats, githubUsername } from "@/lib/github"
 
 export const metadata: Metadata = {
   title: "À propos",
@@ -17,71 +28,14 @@ export const metadata: Metadata = {
 
 const API = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
-// Renseigner NEXT_PUBLIC_REPO_URL une fois le dépôt poussé sur GitHub.
-// Tant qu'il est vide, les artefacts s'affichent en libellés simples — jamais de lien mort.
-const REPO_URL = process.env.NEXT_PUBLIC_REPO_URL ?? ""
-
-function repoLink(path: string, isDir = false): string | null {
-  if (!REPO_URL) return null
-  return `${REPO_URL}/${isDir ? "tree" : "blob"}/HEAD/${path}`
-}
-
-type Artifact = { label: string; path: string; isDir?: boolean }
-
-const DEMARCHE: Artifact[] = [
-  { label: "Vision", path: "docs/00-vision.md" },
-  { label: "Analyse", path: "docs/01-stakeholders.md" },
-  { label: "Objectifs", path: "docs/02-objectifs.md" },
-  { label: "Personas", path: "docs/03-personas.md" },
-  { label: "Architecture", path: "docs/05-archi-info.md" },
-  { label: "Backlog", path: "docs/08-backlog.md" },
-  { label: "Sprints", path: "docs/sprints", isDir: true },
-  { label: "Livraison", path: "docs/backlog-dev.md" },
-]
-
-const CONVENTIONS: Artifact[] = [
-  { label: "Posture & auteur (ABOUT-ME)", path: "rules/ABOUT-ME.md" },
-  { label: "Convention de commits (GIT)", path: "rules/GIT.md" },
-  { label: "Stack officielle (STACK)", path: "rules/STACK.md" },
-]
-
-const ARTEFACTS: Artifact[] = [
-  { label: "Architecture technique", path: "docs/ARCHITECTURE.md" },
-  { label: "Orchestration (CLAUDE.md)", path: "CLAUDE.md" },
-  { label: "Décisions d'architecture (ADR)", path: "docs/DECISIONS.md" },
-  { label: "Backlog & critères d'acceptation", path: "docs/08-backlog.md" },
-  { label: "Sprints", path: "docs/sprints", isDir: true },
-]
-
-function ArtifactList({ items }: { items: Artifact[] }) {
-  return (
-    <ul className="space-y-2">
-      {items.map((item) => {
-        const href = repoLink(item.path, item.isDir)
-        return (
-          <li key={item.path}>
-            {href ? (
-              <a
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm underline underline-offset-4 hover:text-foreground transition-colors duration-200"
-              >
-                <FileText className="size-3.5 text-muted-foreground shrink-0" />
-                {item.label}
-                <ExternalLink className="size-3 text-muted-foreground" />
-              </a>
-            ) : (
-              <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
-                <FileText className="size-3.5 shrink-0" />
-                {item.label}
-              </span>
-            )}
-          </li>
-        )
-      })}
-    </ul>
-  )
+// Icône par catégorie de compétence (lecture visuelle rapide, pas de niveau/score).
+const CATEGORY_ICONS: Record<string, typeof Layers> = {
+  "Data Engineering & Analytics": Database,
+  "Architecture & SI": Network,
+  "ETL/ELT & BI": BarChart3,
+  "Systèmes d'Information & Dev": Code2,
+  "Bases de Données & Stockage": HardDrive,
+  "Cloud & Infrastructure": Cloud,
 }
 
 async function getJson<T>(path: string, fallback: T): Promise<T> {
@@ -99,9 +53,12 @@ export default async function AProposPage() {
   if (!profileRes.ok) throw new Error("Impossible de charger le profil")
   const profile: Profile = await profileRes.json()
 
-  const [skills, projects] = await Promise.all([
+  const username = profile.github_url ? githubUsername(profile.github_url) : null
+
+  const [skills, projects, githubStats] = await Promise.all([
     getJson<Skill[]>("/api/skills/", []),
     getJson<ProjectSummary[]>("/api/projects/", []),
+    username ? fetchGithubStats(username) : Promise.resolve(null),
   ])
 
   const skillsByCategory = skills.reduce<Record<string, Skill[]>>((acc, skill) => {
@@ -172,75 +129,22 @@ export default async function AProposPage() {
               <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Qui suis-je
               </h2>
-              <Markdown className="text-sm text-muted-foreground">{profile.about}</Markdown>
+              <Markdown className="max-w-prose text-sm text-muted-foreground">{profile.about}</Markdown>
             </section>
           )}
 
           {/* Ma démarche */}
-          <section className="space-y-6">
-            <div className="space-y-2">
-              <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                Ma démarche
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                Owner avant Dev : intentions, décisions et specs versionnées dans le dépôt avant la
-                moindre ligne de code. Chaque étape laisse une trace publique.
-              </p>
-            </div>
-
-            {/* La démarche projet */}
-            <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2">
-              {DEMARCHE.map((step, i) => {
-                const href = repoLink(step.path, step.isDir)
-                return (
-                  <span key={step.path} className="inline-flex items-center gap-1.5">
-                    {href ? (
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-md border border-border px-2.5 py-1 text-sm hover:bg-muted transition-colors duration-200"
-                      >
-                        {step.label}
-                      </a>
-                    ) : (
-                      <span className="rounded-md border border-border px-2.5 py-1 text-sm bg-muted/40">
-                        {step.label}
-                      </span>
-                    )}
-                    {i < DEMARCHE.length - 1 && (
-                      <ArrowRight className="size-3.5 text-muted-foreground shrink-0" />
-                    )}
-                  </span>
-                )
-              })}
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-x-8 gap-y-6">
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                  Conventions
-                </h3>
-                <ArtifactList items={CONVENTIONS} />
-              </div>
-              <div className="space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                  Artefacts
-                </h3>
-                <ArtifactList items={ARTEFACTS} />
-              </div>
-            </div>
-
-            <div className="space-y-2 border-l-2 border-brand/30 pl-4">
-              <h3 className="text-base font-semibold">Le rôle des agents IA</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                Les agents IA sont utilisés comme outils de production, de revue et de réflexion. Ils
-                participent à la génération de contenu technique mais ne remplacent ni les décisions
-                produit, ni les choix d&apos;architecture, ni la validation finale. L&apos;objectif est
-                de montrer leur usage concret dans le processus de travail, pas de proclamer leur
-                présence.
-              </p>
-            </div>
+          <section className="space-y-3">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              Ma démarche
+            </h2>
+            <p className="max-w-prose text-sm leading-relaxed text-muted-foreground">
+              Je fonctionne en mode <em>Owner avant Dev</em> : je pose l&apos;intention avant le
+              code. Chaque projet commence par une phase de cadrage — vision, parties prenantes,
+              objectifs, backlog — versionnée et documentée, avant la moindre ligne de code. Les
+              décisions techniques structurantes sont argumentées et tracées, pas prises à la
+              volée.
+            </p>
           </section>
 
           {/* Compétences */}
@@ -249,19 +153,59 @@ export default async function AProposPage() {
               <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                 Compétences
               </h2>
-              <div className="space-y-4">
-                {Object.entries(skillsByCategory).map(([category, items]) => (
-                  <div key={category} className="space-y-2">
-                    <p className="text-sm font-medium">{category}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {items.map((skill) => (
-                        <Badge key={skill.id} variant="secondary">
-                          {skill.name}
-                        </Badge>
-                      ))}
+              <div className="grid sm:grid-cols-2 gap-x-8 gap-y-5">
+                {Object.entries(skillsByCategory).map(([category, items]) => {
+                  const Icon = CATEGORY_ICONS[category] ?? Layers
+                  return (
+                    <div key={category} className="space-y-2">
+                      <p className="flex items-center gap-1.5 text-sm font-medium">
+                        <Icon className="size-4 text-brand shrink-0" />
+                        {category}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {items.map((skill) => (
+                          <Badge key={skill.id} variant="secondary">
+                            {skill.name}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* GitHub */}
+          {githubStats && (
+            <section className="space-y-4">
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                GitHub
+              </h2>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                <a
+                  href={profile.github_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-foreground hover:text-brand transition-colors duration-200"
+                >
+                  <ExternalLink className="size-3.5" />@{githubStats.username}
+                </a>
+                <span>{githubStats.publicRepos} dépôts publics</span>
+                <span>{githubStats.followers} followers</span>
+                <span>Sur GitHub depuis {githubStats.memberSinceYear}</span>
+                {githubStats.topLanguages.length > 0 && (
+                  <span>{githubStats.topLanguages.join(" · ")}</span>
+                )}
+              </div>
+              <div className="overflow-x-auto rounded-lg border bg-surface p-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`https://ghchart.rshah.org/${githubStats.username}`}
+                  alt={`Calendrier des contributions GitHub de ${githubStats.username}`}
+                  loading="lazy"
+                  className="min-w-[640px] w-full"
+                />
               </div>
             </section>
           )}
