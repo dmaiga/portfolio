@@ -73,7 +73,10 @@ PROJECTS = [
     "summary": (
         "Système d'information RH modulaire conçu pour centraliser le recrutement, "
         "la gestion des talents, la gestion documentaire, les contenus RH et "
-        "l'automatisation de processus métiers au sein d'une plateforme unifiée."
+        "l'automatisation de processus métiers au sein d'une plateforme unifiée. "
+        "Le mandat s'étend à DAMS, société cliente d'Antarès RH, avec une "
+        "plateforme de gestion opérationnelle et décisionnelle couvrant "
+        "production, distribution, finance et pilotage."
     ),
 
     "context": (
@@ -82,10 +85,17 @@ PROJECTS = [
         "des talents : acquisition, recrutement, intégration, gestion documentaire "
         "et services RH. Le projet vise à fournir une base technologique évolutive "
         "capable de supporter à terme un ATS complet, un vivier de talents, "
-        "des workflows RH avancés et des services d'automatisation documentaire."
+        "des workflows RH avancés et des services d'automatisation documentaire.\n\n"
+
+        "Dans le cadre des prestations de gestion opérationnelle assurées par "
+        "Antarès RH pour DAMS, société de distribution de produits "
+        "agroalimentaires, j'interviens également comme référent technique sur "
+        "un système d'information couvrant la production agricole, la "
+        "distribution terrain, les ventes, la trésorerie, les stocks, la paie "
+        "et le pilotage décisionnel de l'entreprise."
     ),
 
-    "role": "Référent Technique / Architecte Applicatif",
+    "role": "Référent Technique / Architecte Applicatif & Data",
 
     "problem": (
         "Les processus RH reposaient sur des outils dispersés, des traitements "
@@ -93,7 +103,13 @@ PROJECTS = [
         "de construire une plateforme unique capable de gérer les parcours "
         "candidats, les opportunités, les contenus RH, les dossiers documentaires "
         "et les futurs processus de recrutement tout en garantissant sécurité, "
-        "traçabilité et évolutivité."
+        "traçabilité et évolutivité.\n\n"
+
+        "Chez DAMS, l'enjeu était de centraliser les opérations agricoles, "
+        "commerciales, logistiques et financières dans une plateforme unique, "
+        "avec une traçabilité complète des flux physiques et monétaires et une "
+        "vision consolidée permettant à la direction de piloter l'activité et "
+        "d'identifier rapidement les anomalies."
     ),
 
     "solution": (
@@ -104,42 +120,67 @@ PROJECTS = [
         "d'administration RH et de mécanismes de gestion documentaire sécurisés. "
         "Développement d'un moteur Payroll Audit destiné à automatiser la "
         "préparation des paiements à partir des bulletins de paie et à réduire "
-        "les risques d'erreurs opérationnelles."
+        "les risques d'erreurs opérationnelles.\n\n"
+
+        "Pour DAMS, développement de modules dédiés à la gestion des cultures, "
+        "au suivi des rendements, à la distribution terrain, aux ventes, aux "
+        "stocks, à la trésorerie, à la paie, aux incentives, à l'audit "
+        "financier, aux rapports journaliers et à l'analyse décisionnelle, "
+        "avec API REST, historisation, alertes métier et tableaux de bord "
+        "analytiques."
     ),
 
     "results": (
-        "Plateforme déployée en production et déjà utilisée par des candidats "
-        "et utilisateurs réels. Les modules opérationnels couvrent la vitrine "
-        "institutionnelle, le portail candidat, la publication d'offres d'emploi, "
-        "d'appels d'offres, de stages et de ressources RH, ainsi qu'un espace "
-        "collaborateur et un espace RH dédiés. Au cours des premières semaines "
-        "d'exploitation, la plateforme a enregistré plus de 450 pages vues, "
-        "206 visites et 125 visiteurs uniques avec un temps moyen de consultation "
-        "proche de cinq minutes par visite. Des utilisateurs créent déjà leur "
-        "compte, consultent les ressources disponibles et interagissent avec "
-        "les opportunités publiées."
+        "Plateforme Antarès RH déployée en production et déjà utilisée par des "
+        "candidats et utilisateurs réels : vitrine institutionnelle, portail "
+        "candidat, publication d'offres d'emploi, d'appels d'offres, de stages "
+        "et de ressources RH, espace collaborateur et espace RH dédiés. Au "
+        "cours des premières semaines d'exploitation, plus de 450 pages vues, "
+        "206 visites et 125 visiteurs uniques, avec un temps moyen de "
+        "consultation proche de cinq minutes par visite.\n\n"
+
+        "La plateforme DAMS est déployée en production et utilisée "
+        "quotidiennement par une cinquantaine d'utilisateurs — direction, "
+        "responsables des opérations, superviseurs, gestionnaires de stock, "
+        "agents terrain et équipes commerciales — avec suivi des cultures, "
+        "des ventes, des stocks, de la trésorerie, de la paie et des "
+        "incentives, et une vision consolidée de l'activité via tableaux de "
+        "bord décisionnels."
     ),
 
     "deep_dive": (
-        "L'écosystème repose sur plusieurs domaines spécialisés : site public, "
-        "portail candidat, gestion des opportunités, gestion des collaborateurs, "
-        "CMS RH multilingue, espace RH et moteur documentaire. Les modules "
-        "appliquent des mécanismes d'isolation des données, de contrôle d'accès, "
-        "de traçabilité et de gestion documentaire. L'architecture prépare "
-        "également l'intégration progressive d'un ATS, d'un vivier de talents, "
-        "de moteurs de matching et de services d'automatisation RH."
+        "L'écosystème Antarès RH repose sur plusieurs domaines spécialisés : "
+        "site public, portail candidat, gestion des opportunités, gestion des "
+        "collaborateurs, CMS RH multilingue, espace RH et moteur documentaire, "
+        "avec isolation des données, contrôle d'accès et traçabilité. "
+        "L'architecture prépare l'intégration progressive d'un ATS, d'un "
+        "vivier de talents, de moteurs de matching et de services "
+        "d'automatisation RH.\n\n"
+
+        "Côté DAMS, l'architecture distingue production agricole, "
+        "distribution, finance, supervision, direction, surveillance et "
+        "reporting, avec contrôle d'accès, historisation et audit pour "
+        "sécuriser les flux financiers et logistiques. Une application "
+        "analytique dédiée consomme les API REST du système principal pour "
+        "fournir analyses décisionnelles, comparaisons temporelles et "
+        "indicateurs de rendement agricole."
     ),
 
         "lessons_learned": (
-            "La maîtrise de la gouvernance documentaire et de l'alignement avec les "
-            "besoins métiers est cruciale. L'isolation des rôles et l'implémentation "
-            "de la traçabilité des validations dès la conception évitent "
-            "d'importantes réécritures d'architecture en phase de production."
+            "La maîtrise de la gouvernance documentaire et de l'alignement avec "
+            "les besoins métiers est cruciale : l'isolation des rôles et la "
+            "traçabilité des validations dès la conception évitent "
+            "d'importantes réécritures d'architecture en production.\n\n"
+
+            "Sur DAMS, la traçabilité des flux métier pensée dès la "
+            "conception, associée à une architecture modulaire et une "
+            "séparation claire entre opérations et analyse, facilite "
+            "fortement l'audit, la maintenance et l'évolution du système."
         ),
         "github_url": "",
         "demo_url": "https://antares-rh.com/",
         "featured": True,
-        "start_date": "2025-06-01",
+        "start_date": "2025-06-19",
         "skills": [
             "Python",
             "Django",
@@ -147,106 +188,15 @@ PROJECTS = [
             "PostgreSQL",
             "Docker & Docker Compose",
             "Git & GitHub Actions",
+            "Architecture Applicative",
+            "Conception et intégration d'API REST",
+            "Modélisation de Données",
+            "Contrôle d'Accès (RBAC)",
+            "Audit & Traçabilité",
+            "Metabase",
+            "Architecture SIRH",
+            "Gestion Documentaire",
         ],
-    },
-
-    {
-    "title": "DAMS — ERP Agroalimentaire & Plateforme Décisionnelle",
-    "slug": "dams-agro",
-    "project_type": "PROFESSIONAL",
-
-    "summary": (
-        "Plateforme métier développée pour DAMS dans le cadre des prestations "
-        "d'Antarès RH, permettant de piloter la production agricole, la distribution, "
-        "les opérations financières, la logistique et la performance commerciale "
-        "au sein d'un système d'information unifié."
-    ),
-
-    "context": (
-        "Dans le cadre des prestations assurées par Antarès RH pour DAMS, "
-        "j'interviens comme référent technique sur la conception, l'architecture "
-        "et le développement d'un système d'information couvrant l'ensemble "
-        "de la chaîne de valeur de l'entreprise. La plateforme intègre la gestion "
-        "des cultures, la distribution terrain, le suivi des ventes, la trésorerie, "
-        "les stocks, les ressources humaines, le calcul des incentives, la paie "
-        "et les outils de pilotage décisionnel."
-    ),
-
-    "role": "Référent Technique / Architecte Applicatif & Data",
-
-    "problem": (
-        "Centraliser les opérations agricoles, commerciales, logistiques et "
-        "financières dans une plateforme unique tout en garantissant la "
-        "traçabilité complète des flux physiques et monétaires. "
-        "Le système devait également fournir une vision consolidée permettant "
-        "à la direction de piloter l'activité et d'identifier rapidement les "
-        "anomalies opérationnelles ou financières."
-    ),
-
-    "solution": (
-        "Conception d'une architecture modulaire reposant sur Django, PostgreSQL "
-        "et Django REST Framework. Développement de modules dédiés à la gestion "
-        "des cultures, au suivi des rendements, à la distribution terrain, "
-        "aux ventes, aux stocks, à la trésorerie, à la paie, aux incentives, "
-        "à l'audit financier, aux rapports journaliers et à l'analyse "
-        "décisionnelle. Mise en œuvre d'API REST, de mécanismes "
-        "d'historisation, d'alertes métier, de surveillance des prix "
-        "et de tableaux de bord analytiques."
-    ),
-
-    "results": (
-        "Plateforme déployée en production et utilisée quotidiennement par "
-        "environ cinquante utilisateurs répartis entre direction, responsables "
-        "des opérations, superviseurs, gestionnaires de stock, agents terrain "
-        "et équipes commerciales. Le système permet le suivi des cultures, "
-        "des rendements agricoles, des ventes, des mouvements de stock, "
-        "des flux de trésorerie, de la paie et des incentives. "
-        "Les équipes de direction disposent d'une vision consolidée de "
-        "l'activité grâce aux tableaux de bord décisionnels, aux indicateurs "
-        "de performance et aux mécanismes de surveillance des marges et "
-        "des anomalies opérationnelles."
-    ),
-
-    "deep_dive": (
-        "L'architecture distingue plusieurs domaines métier spécialisés : "
-        "production agricole, distribution, finance, supervision, direction, "
-        "surveillance et reporting. Les workflows intègrent des mécanismes "
-        "de contrôle d'accès, d'historisation et d'audit permettant de "
-        "sécuriser les flux financiers et logistiques. Une application "
-        "analytique dédiée consomme les API REST du système principal afin "
-        "de fournir des analyses décisionnelles, des comparaisons temporelles, "
-        "des indicateurs de rendement agricole et des outils avancés de "
-        "pilotage opérationnel."
-    ),
-
-    "lessons_learned": (
-        "La traçabilité des flux métier doit être pensée dès la conception. "
-        "L'association d'une architecture modulaire, d'une historisation "
-        "systématique et d'une séparation claire entre opérations et analyse "
-        "facilite fortement l'audit, la maintenance et l'évolution du système."
-    ),
-
-    "github_url": "",
-    "demo_url": "",
-    "featured": True,
-    "start_date": "2024-10-06",
-
-    "skills": [
-        "Python",
-        "Django",
-        "Django REST Framework",
-        "PostgreSQL",
-        "Architecture Applicative",
-        "Conception d'API REST",
-        "Modélisation de Données",
-        "RBAC",
-        "Audit & Traçabilité",
-        "Business Intelligence",
-        "Metabase",
-        "Docker & Docker Compose"
-    ]
-
-
     },
 
     # =========================================================================
@@ -341,130 +291,105 @@ PROJECTS = [
 
     },
 
-    {
-        "title": "EGM tech — Plateforme Commerciale B2B/B2C",
-        "slug": "egm-tech",
-        "project_type": "CONSULTING",
-        "summary": "Plateforme e-commerce technique avec système de demandes de devis et gestion du cycle commercial.",
-        "context": (
-            "Déploiement d'une solution commerciale complète pour la présentation de solutions techniques, "
-            "la passation de commandes en ligne et la qualification des opportunités d'affaires."
-        ),
-        "role": "Consultant Indépendant / Développeur Full-Stack",
-        "problem": (
-            "Modéliser un catalogue de produits techniques complexes tout en proposant un double parcours utilisateur : "
-            "achat direct (B2C) et demande de devis sur mesure avec tarification dynamique (B2B)."
-        ),
-        "solution": (
-            "Conception d'un moteur de devis modulable et d'un espace client proposant un historique transactionnel. "
-            "Mise en place d'un backoffice de gestion commerciale posant les bases de l'automatisation des factures proformas."
-        ),
-        "lessons_learned": (
-            "La flexibilité des modèles de données commerciaux est primordiale. Structurer le catalogue de manière "
-            "extensible dès le début permet d'absorber l'ajout de nouvelles spécifications techniques sans modifier "
-            "le coeur de l'application."
-        ),
-        "github_url": "",
-        "demo_url": "",
-        "featured": False,
-        "skills": ["Python", "Django", "MySQL", "JavaScript", "Conception et intégration d'API REST"],
-    },
-   
-    {
-        "title": "Zabantu — Portail de Publication Scientifique",
-        "slug": "zabantu-research",
-        "project_type": "CONSULTING",
-        "summary": "Plateforme collaborative d'archivage, de valorisation et de diffusion de contenus académiques.",
-        "context": (
-            "Conception et déploiement du portail web institutionnel du Groupe de Recherche Zabantu "
-            "dédié à la promotion et au partage des connaissances scientifiques."
-        ),
-        "role": "Consultant Indépendant / Développeur Backend",
-        "problem": (
-            "Organiser et structurer la taxonomie de contenus académiques variés (articles, analyses, événements) "
-            "avec des règles d'administration strictes selon le statut des chercheurs."
-        ),
-        "solution": (
-            "Création d'un système d'archivage numérique indexé couplé à un backoffice d'administration simplifié "
-            "pour les équipes universitaires, permettant la publication autonome et la valorisation des productions."
-        ),
-        "lessons_learned": (
-            "L'accent doit être mis sur l'expérience utilisateur des administrateurs non techniques. Un backoffice "
-            "épuré réduit considérablement les coûts de support post-déploiement."
-        ),
-        "github_url": "",
-        "demo_url": "",
-        "featured": True,
-        "skills": ["Python", "Django", "MySQL", "JavaScript"],
-    },
-
     # =========================================================================
     # CATEGORIE 3 : PROJETS ACADÉMIQUES (MASTER 2 DATA SCIENCE)
     # =========================================================================
     {
-        "title": "Projet d'Entreprise BI — AES Global Tech Market",
-        "slug": "bi-aes-global",
-        "project_type": "ACADEMIC",
-        "summary": "Conception d'un Data Warehouse multidimensionnel et de pipelines ELT pour le pilotage commercial et financier.",
-        "context": (
-            "Mise en place d'une plateforme décisionnelle centralisant les données de l'application 'Tassouma' "
-            "pour une entreprise technologique opérant en Afrique de l'Ouest."
-        ),
-        "role": "Data Engineer / Architecte BI (Master 2)",
-        "problem": (
-            "Standardiser les KPI métiers et consolider des volumes hétérogènes au sein d'une architecture "
-            "analytique multicouche fiable, dotée d'une stratégie de tolérance aux pannes (Fail-Safe)."
-        ),
-        "solution": (
-            "Architecture ELT complète (Staging → Warehouse → Data Marts) développée avec dbt Core. "
-            "Modélisation en étoile générant 31 modèles analytiques, soutenue par plus de 155 tests automatisés "
-            "et restitutions visuelles interactives via Metabase."
-        ),
-        "lessons_learned": (
-            "La gouvernance et la qualité des données priment sur la simple tuyauterie. L'automatisation des tests "
-            "sur dbt garantit la souveraineté et la fiabilité des indicateurs transmis aux directions exécutives."
-        ),
-        "github_url": "",
-        "demo_url": "",
-        "featured": True,
-        "skills": ["SQL", "dbt Core", "Modélisation dimensionnelle", "Metabase", "PostgreSQL"],
+    "title": "Projet d'Entreprise BI — AES Global Tech Market",
+    "slug": "bi-aes-global",
+    "project_type": "ACADEMIC",
+    
+    
+    "summary": (
+        "Conception d'une plateforme décisionnelle complète intégrant gouvernance "
+        "des données, Data Warehouse multidimensionnel et pipelines ELT pour le "
+        "pilotage commercial, logistique et financier."
+    ),
+    
+    "context": (
+        "Projet d'entreprise réalisé dans le cadre du Master autour de l'application "
+        "transactionnelle Tassouma. L'objectif était de concevoir une plateforme "
+        "BI répondant à des besoins réels de pilotage en partant de l'analyse "
+        "métier, de la gouvernance des données et des exigences décisionnelles "
+        "avant la conception technique."
+    ),
+    
+    "role": "Data Engineer / Architecte BI",
+    
+    "problem": (
+        "L'entreprise disposait de données opérationnelles réparties dans plusieurs "
+        "domaines métiers mais ne possédait pas de plateforme analytique permettant "
+        "de standardiser les KPI, consolider les indicateurs, séparer les usages "
+        "transactionnels des usages décisionnels et garantir la qualité des données."
+    ),
+    
+    "solution": (
+        "Réalisation d'une étude des besoins décisionnels des directions "
+        "commerciale, financière, logistique et générale afin de définir les "
+        "indicateurs stratégiques, les règles de gouvernance et les modèles "
+        "analytiques. Conception d'une architecture ELT multicouche "
+        "(Staging → Warehouse → Data Marts), d'un schéma multidimensionnel "
+        "en constellation, d'une politique de gouvernance des données, "
+        "de plus de 155 tests dbt automatisés, d'une documentation analytique "
+        "centralisée et d'un pipeline industrialisé alimentant les futurs "
+        "tableaux de bord décisionnels."
+    ),
+    
+    "results": (
+        "Conception d'une plateforme BI complète comprenant un Data Warehouse "
+        "centralisé, plusieurs Data Marts spécialisés (commercial, finance, "
+        "supply chain, marketing et direction), une documentation analytique "
+        "générée automatiquement, une stratégie Fail-Safe empêchant la "
+        "publication de données invalides et un socle prêt à accueillir "
+        "des usages avancés de Data Science et de prévision des ventes."
+    ),
+    
+    "deep_dive": (
+        "Le projet a débuté par une phase d'analyse métier et de gouvernance "
+        "des données permettant d'identifier les besoins décisionnels, les "
+        "KPI stratégiques, les responsabilités des acteurs et les règles "
+        "de qualité des données. L'architecture repose ensuite sur une "
+        "Modern Data Stack composée de PostgreSQL, dbt, pgloader, Docker "
+        "et Metabase, avec une séparation stricte des couches Staging, "
+        "Warehouse et Data Marts. La plateforme applique des conventions "
+        "de nommage, une documentation automatique, des contrôles de qualité "
+        "dbt, une gestion des accès par profil et une architecture pensée "
+        "pour évoluer vers le streaming, le CDC, l'observabilité et les "
+        "cas d'usage Data Science."
+    ),
+    
+    "lessons_learned": (
+        "La gouvernance et la qualité des données priment sur la simple "
+        "tuyauterie. L'automatisation des tests sur dbt garantit la "
+        "fiabilité des indicateurs transmis aux directions exécutives."
+    ),
+    
+    "github_url": "",
+    "demo_url": "",
+    "featured": True,
+    
+    "skills": [
+        "Python",
+        "SQL",
+        "PostgreSQL",
+        "dbt Core",
+        "Docker & Docker Compose",
+        "Metabase",
+        "Modélisation dimensionnelle",
+        "Architecture Applicative",
+        "Modélisation de Données",
+        "Business Intelligence"
+    ],
+    
+    
     },
-   
-    {
-        "title": "Plateforme Big Data & Lakehouse E-commerce",
-        "slug": "big-data-lakehouse",
-        "project_type": "ACADEMIC",
-        "summary": "Pipeline d'ingestion et de traitement distribué de flux streaming multi-sources (Kafka, Flink, Spark).",
-        "context": (
-            "Conception d'une architecture Lakehouse moderne intégrant l'ingestion temps réel, l'orchestration, "
-            "ainsi que l'observabilité de la plateforme informatique."
-        ),
-        "role": "Architecte Big Data (Master 2)",
-        "problem": (
-            "Traiter simultanément des flux de navigation web, des transactions et des mouvements de stock continus "
-            "en combinant une logique de streaming et de batch (Architecture Lambda)."
-        ),
-        "solution": (
-            "Pipeline complet : Producteurs Kafka → Apache Flink (agrégation au fil de l'eau) → MinIO (Stockage brut) "
-            "→ Apache Spark (transformations lourdes) → PostgreSQL / Metabase. Le tout orchestré par Dagster "
-            "et monitoré par le couple Prometheus & Grafana sous Docker Compose."
-        ),
-        "lessons_learned": (
-            "L'alignement et la synchronisation des composants distribués forment le véritable défi des infrastructures Big Data. "
-            "La mise en place de l'observabilité (Grafana/Prometheus) s'avère indispensable pour identifier "
-            "immédiatement les goulots d'étranglement ou les pertes de messages."
-        ),
-        "github_url": "",
-        "demo_url": "",
-        "featured": True,
-        "skills": ["Apache Kafka", "Apache Flink", "Apache Spark", "Dagster", "MinIO", "Docker & Docker Compose", "Metabase"],
-    },
+
 
 ]
 
 PROFILE = {
     "full_name": "Mahamane Daouda Maïga",
-    "title": "Architecte Applicatif & Data Engineer",
+    "title": "Systèmes d'Information | Data | Automatisation",
     "bio": (
         "Basé à Bamako (Mali), je conçois des systèmes d'information, "
         "des plateformes métiers et des architectures data permettant "
@@ -472,23 +397,31 @@ PROFILE = {
         "évolutives et orientées décision."
     ),
     "about": (
-        "Consultant BI et Data Engineer, je conçois et développe des "
-        "systèmes d'information couvrant aussi bien les plateformes "
-        "métiers que les architectures data. Mon expérience s'étend "
-        "de l'analyse des besoins à la conception fonctionnelle, la "
-        "modélisation des données, l'architecture applicative, le "
-        "développement backend et le déploiement de solutions en production.\n\n"
+        "Je conçois, développe, déploie et fais évoluer des plateformes "
+        "numériques, à l'intersection des systèmes d'information, du "
+        "développement applicatif, de la donnée et de l'automatisation "
+        "des processus métier.\n\n"
 
-        "J'interviens sur des projets variés : SIRH, ERP métier, "
-        "plateformes institutionnelles, pipelines Data Engineering et "
-        "outils décisionnels. Mon objectif est de construire des "
-        "solutions robustes, maintenables et alignées sur les besoins "
-        "opérationnels des organisations.\n\n"
+        "J'interviens aujourd'hui comme Assistant Data et Informatique "
+        "chez Antarès SARL, cabinet de gestion des ressources humaines "
+        "basé à Bamako — mais ce qui me définit tient moins à un "
+        "intitulé qu'à un spectre de compétences : porter une solution "
+        "de bout en bout, de l'analyse du besoin jusqu'à la maintenance. "
+        "J'interviens sur l'ensemble du cycle de vie d'une plateforme : "
+        "analyse des besoins, conception fonctionnelle, modélisation "
+        "des données, architecture applicative, développement, "
+        "déploiement, maintenance.\n\n"
 
-        "À long terme, je souhaite évoluer vers des fonctions "
-        "d'Architecte Data et Solution afin de concevoir des "
-        "écosystèmes techniques où architecture, gouvernance des "
-        "données et enjeux métier s'articulent de manière cohérente."
+        "Mes réalisations couvrent les systèmes d'information RH, les "
+        "plateformes opérationnelles et décisionnelles, les portails "
+        "métiers collaboratifs, les plateformes commerciales, ainsi que "
+        "l'ingénierie des données et la Business Intelligence.\n\n"
+
+        "À terme, je vise des fonctions d'architecte data et solutions "
+        "— concevoir des écosystèmes techniques où architecture, "
+        "gouvernance des données et enjeux métier s'articulent de "
+        "manière cohérente. Ma progression se mesure à la qualité des "
+        "systèmes que je sais concevoir et défendre, pas à un titre."
     ),
     "photo": "",
     "email": "mdmaiga01@gmail.com",
