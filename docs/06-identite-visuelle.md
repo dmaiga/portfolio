@@ -125,7 +125,7 @@ Utilisés pour typer le contexte de chaque projet :
 Les badges orientent la lecture — ils ne décorent pas.
 
 ### Navigation
-Toujours visible. Accès direct à : **Réalisations · Méthode · À propos · Contact**
+Toujours visible. Accès direct à : **Accueil · Réalisations · À propos · Contact**
 
 ---
 
@@ -147,6 +147,7 @@ Les animations accompagnent l'interface. Elles ne deviennent jamais le centre de
 - Portfolios « vitrine IA »
 - Murs de badges technologiques
 - **Esthétique dashboard SaaS** — cartes KPI, métriques partout, graphiques décoratifs. Le sujet du portfolio est la démarche, pas les données. La compétence Data se prouve dans les projets, pas dans la mise en page du portfolio lui-même.
+  **Exception assumée :** les statistiques GitHub sur `/a-propos` (chiffres + calendrier de contributions) contredisent sciemment cette règle — voir `docs/DECISIONS.md`.
 
 **Le visiteur doit retenir :**
 *« Cette personne sait concevoir et réaliser des systèmes. »*

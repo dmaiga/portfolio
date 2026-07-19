@@ -63,3 +63,17 @@ Format par décision : **Décision · Pourquoi · Alternatives écartées**. Hon
 *2026-06-24 · Ouvert / différé*
 - **Statut.** Non tranché. Figé au sprint dédié (cf. `STACK.md`).
 - **Direction.** GitHub Actions, lint (Ruff/Black) + tests backend (Django TestCase). Périmètre frontend à définir.
+
+## ADR-009 — Triage des idées de `QUESTIONS-OUVERTES.md`
+*2026-07-19 · Acté*
+- **Décision.** Blog/Articles techniques et refonte responsive de l'admin Django : **écartés**, pas au backlog. Statistiques GitHub sur `/a-propos` : **acceptées**, implémentées.
+- **Pourquoi (rejets).** Le blog est un engagement de maintenance de contenu continu, en tension avec la vision « d'abord moi et mes pairs » (`docs/00-vision.md`) — gros morceau pour un bénéfice non démontré à ce stade. L'admin Django est un outil interne (auteur seul), pas la vitrine publique que le portfolio sert ; priorité basse tant qu'il n'est pas utilisé depuis mobile en pratique.
+- **Pourquoi (stats GitHub).** Contredit sciemment l'anti-direction « pas d'esthétique dashboard SaaS » de `docs/06-identite-visuelle.md` — assumé par l'auteur : le compromis (quelques chiffres + un calendrier de contributions, dans le style existant) a été jugé sans coût réel pour le produit.
+- **Alternatives écartées.** Blog scopé à un simple renvoi vers des posts LinkedIn externes : non retenu, laissé fermé plutôt que fait à moitié. Admin Django : CSS custom pour le rendre responsive — reporté, pas rejeté définitivement si l'usage mobile devient réel.
+
+## ADR-010 — Restructuration de `/a-propos` : retrait des liens vers les docs internes et du bloc « rôle des agents IA »
+*2026-07-19 · Acté, déviation assumée de `docs/WIREFRAME.jsx`*
+- **Décision.** La section "Ma démarche" n'affiche plus de liens vers les fichiers du dépôt (`docs/00-vision.md`, `rules/ABOUT-ME.md`, etc.) ni de séparation Conventions/Artefacts — remplacés par un court texte narratif. Le bloc "Le rôle des agents IA" est supprimé sans remplacement.
+- **Pourquoi.** Avec le recul, exposer la liste des docs internes du dépôt directement sur la page publique la plus centrale du site risque d'être mal interprétée par un visiteur (recruteur, prospect) qui n'a pas le contexte du projet. Le texte narratif porte la même information (méthode "Owner avant Dev") sans ce risque. Le bloc agents IA a été jugé, à l'usage, inutile à cet endroit.
+- **Alternatives écartées.** Garder les liens mais les déplacer en fin de page : n'aurait pas réglé le risque de mauvaise interprétation, seulement sa position.
+- **Divergence à noter.** `docs/WIREFRAME.jsx` (page About, section Démarche) prévoyait explicitement 3 liens repo (`rules/`, `docs/sprints/`, `DECISIONS.md`) — mis à jour en cohérence avec cette décision.

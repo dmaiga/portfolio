@@ -332,7 +332,7 @@ const AboutPage = () => (
 
           <Divider />
 
-          {/* Démarche — le vrai contenu de l'ex-page Méthode */}
+          {/* Démarche — texte narratif, pas de liens vers les docs internes du dépôt */}
           <div>
             <Label>Ma démarche</Label>
             <div className="space-y-1 mb-2">
@@ -340,12 +340,7 @@ const AboutPage = () => (
               <div className="h-2 bg-slate-100 rounded w-5/6" />
               <div className="h-2 bg-slate-100 rounded w-4/6" />
             </div>
-            <Annotation>Owner avant Dev · specs versionnées · artefacts publics · lien repo</Annotation>
-            <div className="grid grid-cols-3 gap-2 mt-3">
-              <Box h={10} label="rules/" />
-              <Box h={10} label="docs/sprints/" />
-              <Box h={10} label="DECISIONS.md" />
-            </div>
+            <Annotation>Owner avant Dev · texte seul, aucun lien vers les docs/rules du dépôt</Annotation>
           </div>
 
           <Divider />
@@ -364,6 +359,19 @@ const AboutPage = () => (
               </div>
             ))}
             <Annotation>Pas de barres de progression — elles ne signifient rien</Annotation>
+          </div>
+
+          <Divider />
+
+          {/* GitHub — exception assumée à l'anti-direction "pas de dashboard" (voir DECISIONS.md) */}
+          <div>
+            <Label>GitHub</Label>
+            <div className="flex gap-4 mb-2">
+              <div className="h-2 bg-slate-100 rounded w-24" />
+              <div className="h-2 bg-slate-100 rounded w-24" />
+              <div className="h-2 bg-slate-100 rounded w-24" />
+            </div>
+            <Box h={16} label="Calendrier de contributions" />
           </div>
 
           <Divider />
