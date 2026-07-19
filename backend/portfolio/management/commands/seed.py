@@ -140,9 +140,9 @@ PROJECTS = [
         "consultation proche de cinq minutes par visite.\n\n"
 
         "La plateforme DAMS est déployée en production et utilisée "
-        "quotidiennement par une cinquantaine d'utilisateurs — direction, "
+        "quotidiennement par une cinquantaine d'utilisateurs : direction, "
         "responsables des opérations, superviseurs, gestionnaires de stock, "
-        "agents terrain et équipes commerciales — avec suivi des cultures, "
+        "agents terrain et équipes commerciales, avec suivi des cultures, "
         "des ventes, des stocks, de la trésorerie, de la paie et des "
         "incentives, et une vision consolidée de l'activité via tableaux de "
         "bord décisionnels."
@@ -404,7 +404,7 @@ PROFILE = {
 
         "J'interviens aujourd'hui comme Assistant Data et Informatique "
         "chez Antarès SARL, cabinet de gestion des ressources humaines "
-        "basé à Bamako — mais ce qui me définit tient moins à un "
+        "basé à Bamako, mais ce qui me définit tient moins à un "
         "intitulé qu'à un spectre de compétences : porter une solution "
         "de bout en bout, de l'analyse du besoin jusqu'à la maintenance. "
         "J'interviens sur l'ensemble du cycle de vie d'une plateforme : "
@@ -418,7 +418,7 @@ PROFILE = {
         "l'ingénierie des données et la Business Intelligence.\n\n"
 
         "À terme, je vise des fonctions d'architecte data et solutions "
-        "— concevoir des écosystèmes techniques où architecture, "
+        " concevoir des écosystèmes techniques où architecture, "
         "gouvernance des données et enjeux métier s'articulent de "
         "manière cohérente. Ma progression se mesure à la qualité des "
         "systèmes que je sais concevoir et défendre, pas à un titre."
