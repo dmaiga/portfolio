@@ -26,6 +26,10 @@ db.sqlite3
 backend/media/
 backend/staticfiles/
 
+# CV source (contient des infos personnelles : téléphone, adresse) —
+# utilisé localement par `manage.py seed --cv docs/cv.pdf`, jamais poussé.
+backend/docs/
+
 # Node / Next.js (Sprint 2)
 node_modules/
 .next/
