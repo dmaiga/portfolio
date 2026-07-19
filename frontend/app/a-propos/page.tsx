@@ -140,8 +140,8 @@ export default async function AProposPage() {
             </h2>
             <p className="max-w-prose text-sm leading-relaxed text-muted-foreground">
               Je fonctionne en mode <em>Owner avant Dev</em> : je pose l&apos;intention avant le
-              code. Chaque projet commence par une phase de cadrage — vision, parties prenantes,
-              objectifs, backlog — versionnée et documentée, avant la moindre ligne de code. Les
+              code. Chaque projet commence par une phase de cadrage (vision, parties prenantes,
+              objectifs, backlog) versionnée et documentée, avant la moindre ligne de code. Les
               décisions techniques structurantes sont argumentées et tracées, pas prises à la
               volée.
             </p>
