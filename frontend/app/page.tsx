@@ -30,10 +30,10 @@ export default async function HomePage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
-      <div className="grid md:grid-cols-3 gap-10 md:gap-12 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
 
         {/* ── Colonne gauche : identité + démarche (sticky) ────────── */}
-        <aside className="md:col-span-1 space-y-6 md:sticky md:top-20 md:self-start">
+        <aside className="min-w-0 md:col-span-1 space-y-6 md:sticky md:top-20 md:self-start">
 
           {/* Identité */}
           <div className="space-y-4">
@@ -114,7 +114,7 @@ export default async function HomePage() {
         </aside>
 
         {/* ── Colonne droite : projets mis en avant ────────────────── */}
-        <section className="md:col-span-2 space-y-5">
+        <section className="min-w-0 md:col-span-2 space-y-5">
           <div className="flex items-center justify-between">
             <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Réalisations récentes

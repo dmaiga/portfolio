@@ -71,10 +71,10 @@ export default async function AProposPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
-      <div className="grid md:grid-cols-3 gap-10 md:gap-12 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500">
 
         {/* ── Colonne gauche : identité (sticky) ───────────────────── */}
-        <aside className="md:col-span-1 space-y-6 md:sticky md:top-20 md:self-start">
+        <aside className="min-w-0 md:col-span-1 space-y-6 md:sticky md:top-20 md:self-start">
           {profile.photo && (
             <div className="relative size-28 overflow-hidden rounded-2xl ring-2 ring-brand/20 shadow-sm">
               <Image
@@ -121,7 +121,7 @@ export default async function AProposPage() {
         </aside>
 
         {/* ── Colonne droite : contenu ─────────────────────────────── */}
-        <div className="md:col-span-2 space-y-12">
+        <div className="min-w-0 md:col-span-2 space-y-12">
 
           {/* Qui suis-je */}
           {profile.about && (
